@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="kopo.poly.persistance.mapper.IReplyMapper">
+
+	<select id="commentCount" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM REPLY
+	</select>
+
+	<select id="commentList" parameterType="ReplyDTO" resultType="ReplyDTO">
+		SELECT *
+
+		FROM REPLY
+		WHERE BOARD_SEQ = #{board_seq}
+
+
+	</select>
+
+
+	<insert id="commentInsert" parameterType="ReplyDTO">
+		INSERT INTO
+			REPLY (COMMENTS_ID, BOARD_SEQ, CONTENTS, USER_ID, REG_DT)
+		VALUES(#{comments_id},#{board_seq},#{contents},#{user_id},sysdate())
+	</insert>
+
+	<update id="commentUpdate" parameterType="ReplyDTO">
+		UPDATE REPLY
+		SET
+			CONTENTS = #{contents}
+		WHERE COMMENTS_ID = #{comments_id}
+	</update>
+
+	<delete id="commentDelete" parameterType="ReplyDTO">
+		DELETE FROM REPLY WHERE COMMENTS_ID = #{comments_id}
+	</delete>
+</mapper>
+
+
+		
