@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ page import="kopo.poly.util.CmmUtil" %>
 <%@ page import="kopo.poly.dto.BoardDTO" %>
-<%@ page import="kopo.poly.dto.BoardDTO" %>
 <%
 BoardDTO rDTO = (BoardDTO)request.getAttribute("rDTO");
 
@@ -13,9 +12,8 @@ if (rDTO==null){
 }
 
 int access = 1; //(작성자 : 2 / 다른 사용자: 1) 
-
-if (session.getAttribute("user_id").toString().equals(
-		CmmUtil.nvl(rDTO.getUser_id()))) {
+	String id_session = CmmUtil.nvl((String) session.getAttribute("user_id"));
+if (id_session.equals(CmmUtil.nvl(rDTO.getUser_id()))) {
 	access = 2;
 }
 %>  
@@ -52,7 +50,7 @@ function doOnload(){
 	
 	if ("<%=access%>"=="1"){
 		alert("작성자만 수정할 수 있습니다.");
-		location.href="/notice/NoticeList";
+		location.href="/board/BoardList";
 		
 	}
 }

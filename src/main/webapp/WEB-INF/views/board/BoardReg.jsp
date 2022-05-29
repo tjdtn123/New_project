@@ -19,8 +19,10 @@
     <link rel="icon" type="image/x-icon" href="static/assets/wallpaper.jpg" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="/js/MyUploadAdpater.js"></script>
     <!-- CKEditor 5 CDN 적용-->
     <script src="/ckeditor/build/ckeditor.js"></script>
+
     <style>
         body {
             background-image : url("/static/assets/wallpaper.jpg");
@@ -57,14 +59,14 @@
                 f.noticeYn[0].focus();
                 return false;
             }
-            if (window.editor.getData() == "") {
+            if (window.contents.getData() == "") {
                 alert("내용을 입력해주세요");
-                window.editor.editing.view.focus();
+                window.contents.editing.view.focus();
                 return;
             }
-            if(calBytes(window.editor.getData() ) > 4000){
+            if(calBytes(window.contents.getData() ) > 4000){
                 alert("최대 4000Bytes까지 입력 가능합니다.");
-                window.editor.editing.view.focus();
+                window.contents.editing.view.focus();
                 return false;
             }
 
@@ -93,16 +95,9 @@
         }
         function MyCustomUploadAdapterPlugin( editor ) {
             editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-                // Configure the URL to the upload script in your back-end here!
-        // 결국엔 내가 구현해 주어야 할 것은,
-        // FileRepository가 어떤 업로드 어댑터를 사용하게 하느냐만 설정해주면 된다.
-        // 나머지 이미지 업로드 플러그인, 파일 로더, FileRepository등등은 이미 만들어져 있다.
-        return new MyUploadAdapter( loader );
-            };
+                return new MyUploadAdapter( loader );
+            }
         }
-
-
-
     </script>
 </head>
 <body class="bg-primary">
@@ -161,15 +156,17 @@
 <!-- 글쓰기 에디터 실행-->
 <script>
     ClassicEditor
-        .create( document.getElementById("contents"),{
-                extraPlugins: [MyCustomUploadAdapterPlugin],
+        .create( document.querySelector('#contents' ),{
+            extraPlugins: [ MyCustomUploadAdapterPlugin ],
         })
-            .catch( error => {
-                console.error(error);
+        .then( editor => {
+            window.editor = editor;
+        } )
+        .catch( error => {
+            console.error(error);
         })
 
 </script>
-
 
 
 </body>

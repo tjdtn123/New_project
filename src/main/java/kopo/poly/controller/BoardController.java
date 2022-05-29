@@ -7,12 +7,14 @@ import kopo.poly.service.IBoardService;
 import kopo.poly.service.impl.AwsS3Service;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -20,9 +22,8 @@ import javax.annotation.Resource;
 import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.io.IOException;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -165,13 +166,24 @@ public class BoardController {
     }
 
     @PostMapping(value = "/fileUpload")
-    public String FileUpload (MultipartHttpServletRequest multipartHttpServletRequest){
-        MultipartFile file = multipartHttpServletRequest.getFile("file");
-        List<MultipartFile> pList = new List<MultipartFile>();
+    @ResponseBody
+    public HashMap FileUpload (MultipartHttpServletRequest request /*@RequestPart List<MultipartFile> files*/) throws IOException {
+        HashMap<String, Object> map = new HashMap<>();
+
+        MultipartFile files = request.getFile("upload");
+
+        String img = s3Service.uploadImage(files);
 
 
-        return s3Service.uploadImage(file)
+        String realimage = "https://d3aimtz26nv519.cloudfront.net/"+img;
+        map.put("url", realimage);
+        log.info(realimage);
+
+
+        return map;
     }
+
+
 
     /**
      * 게시판 상세보기

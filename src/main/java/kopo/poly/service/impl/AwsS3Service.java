@@ -23,34 +23,37 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class AwsS3Service {
+    public static final String CLOUD_FRONT_DOMAIN_NAME = "https://d3aimtz26nv519.cloudfront.net";
+
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
     private final AmazonS3 amazonS3;
 
-    public List<String> uploadImage(List<MultipartFile> multipartFile) {
+
+
+    public String uploadImage(MultipartFile file) throws IOException {
         log.info(this.getClass().getName() + "uploadImage start!");
-        List<String> fileNameList = new ArrayList<>();
 
-        multipartFile.forEach(file -> {
-            String fileName = createFileName(file.getOriginalFilename());
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(file.getSize());
-            objectMetadata.setContentType(file.getContentType());
+        String fileName = createFileName(file.getOriginalFilename());
 
-            try(InputStream inputStream = file.getInputStream()) {
-                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
-            } catch(IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
-            }
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(file.getSize());
+        objectMetadata.setContentType(file.getContentType());
 
-            fileNameList.add(fileName);
-        });
+
+        amazonS3.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), objectMetadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+        log.info(fileName);
+
+
         log.info(this.getClass().getName() + "uploadImage end!");
-        return fileNameList;
+        return fileName;
+
     }
+
+
 
     public void deleteImage(String fileName) {
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
