@@ -3,7 +3,10 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-**/src/main/application.properties
+**/src/main/resource/application.properties
+**/src/main/resource/log4jdbc.log4j2.properties
+**/src/main/resource/logback.xml
+
 ### STS ###
 .apt_generated
 .classpath

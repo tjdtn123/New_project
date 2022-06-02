@@ -7,7 +7,6 @@ pageEncoding="UTF-8"%>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-
         <title>회원가입</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/assets/wallpaper.jpg" />
@@ -176,7 +175,7 @@ pageEncoding="UTF-8"%>
     </head>
 
     <body class="bg-primary" >
-    <%@include file="import/Navigation.jsp"%>
+    <%@include file="../import/Navigation.jsp"%>
     <section>
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5">

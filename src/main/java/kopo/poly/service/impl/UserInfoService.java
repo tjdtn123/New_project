@@ -51,5 +51,13 @@ public class UserInfoService implements IUserInfoService {
 
         return userinfoMapper.Login(uDTO);
     }
+
+    @Override
+    public UserInfoDTO SelectUser(UserInfoDTO uDTO) throws Exception{
+
+        log.info(this.getClass().getName() + ".SelectUser Start!");
+
+        return userinfoMapper.SelectUser(uDTO);
+    }
 }
 

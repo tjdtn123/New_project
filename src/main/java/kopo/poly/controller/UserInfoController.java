@@ -60,11 +60,6 @@ public class UserInfoController {
         return "/PwdChange";
 
     }
-    @GetMapping(value = "MyPage00")
-    public String MyPage00() {
-        return "/MyPage00";
-
-    }
 
 
     @PostMapping("/Login")
@@ -108,7 +103,7 @@ public class UserInfoController {
     }
 
     @PostMapping(value = "/Userinfoinsert")
-    public String userinfoInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
+    public String userinfoInsert(HttpServletRequest request, ModelMap model) {
 
         log.info(this.getClass().getName() + ".UserInfoInsert start!");
 
@@ -183,7 +178,7 @@ public class UserInfoController {
             /*
              * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
              */
-            String user_id = CmmUtil.nvl((String) session.getAttribute("PwdSession")); // 아이디
+            String user_id = CmmUtil.nvl((String) session.getAttribute("user_id")); // 아이디
             String password = CmmUtil.nvl(request.getParameter("password")); // 제목
 
 
@@ -226,6 +221,7 @@ public class UserInfoController {
 
         return "/MsgToLogin";
     }
+
     @PostMapping("/register/idCheck")
     @ResponseBody
     public int idCheck(@RequestParam("user_id") String id){
@@ -235,5 +231,6 @@ public class UserInfoController {
         log.info("확인 결과:"+cnt);
         return cnt;
     }
+
 
 }

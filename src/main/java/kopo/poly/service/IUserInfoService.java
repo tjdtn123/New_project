@@ -8,7 +8,12 @@ public interface IUserInfoService {
 
     void ChangePwd(UserInfoDTO uDTO) throws Exception;
 
-    public int idCheck(String id);
+    int idCheck(String id);
 
-    public UserInfoDTO Login(UserInfoDTO uDTO )throws Exception;
+    UserInfoDTO Login(UserInfoDTO uDTO )throws Exception;
+
+    UserInfoDTO SelectUser(UserInfoDTO uDTO) throws Exception;
+
+
+
 }

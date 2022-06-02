@@ -4,8 +4,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>글 등록</title>
-    <meta charset="UTF-8">
     <title>글쓰기</title>
     <!-- include libraries(jQuery, bootstrap) -->
     <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -29,6 +27,7 @@
     </script>
 </head>
 <body>
+<%@ include file="import/Navigation.jsp" %>
     <form name="f" method="post" action="/board/BoardInsert" target="ifrPrc" onsubmit="return doSubmit(this);">
 
             <textarea name="contents" id="contents"></textarea>
