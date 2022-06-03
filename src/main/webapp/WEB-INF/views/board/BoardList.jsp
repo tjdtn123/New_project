@@ -61,7 +61,7 @@
          .active{
              background-color: #cdd5ec;
          }
-         h1,h2,h3,h4,h5,h6,p,div{
+         *{
              font-family: 'Gowun Dodum', sans-serif;
              color: white;
          }
@@ -78,22 +78,12 @@
     </script>
 
 </head>
-<body class="bg-primary">
+<body>
     <%@include file="../import/Navigation.jsp"%>
     <!-- Page Content-->
-    <section>
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5">
-                <div class="col-lg-6">
-                    <br>
-                    <br>
-                    <br>
-                </div>
-            </div>
-        </div>
-    </section>
+    <br>
+    <br>
     <h2>공지사항</h2>
-    <hr/>
     <br/>
     <div class="board_list_warp" >
         <div class="board_list">
@@ -104,6 +94,7 @@
                 <div class="writer">등록자</div>
                 <div class="reg_dt">등록일</div>
             </div>
+            <div class="board_list_body">
             <%
                 for (int i = 0; i < rList.size(); i++) {
                     BoardDTO rDTO = rList.get(i);
@@ -112,20 +103,19 @@
                         rDTO = new BoardDTO();
                     }
             %>
-            <div class="board_list_body">
                 <div class="item">
                     <%
                         //공지글이라면, [공지]표시
                         if (CmmUtil.nvl(rDTO.getNotice_yn()).equals("1")) {
-                            out.print("<b>[공지]</b>");
+                            out.print("<div class=`num`><b>[공지]</b></div>");
 
                             //공지글이 아니라면, 글번호 보여주기
                         } else {
-                            out.print(CmmUtil.nvl(rDTO.getBoard_seq()));
+                            out.print("<div class=`num`>"+CmmUtil.nvl(rDTO.getBoard_seq())+"</div>");
 
                         }
                     %>
-                    <div class="num">
+                    <div class="tit">
                     <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getBoard_seq())%>');">
                             <%=CmmUtil.nvl(rDTO.getTitle()) %>
                     </a>
@@ -135,15 +125,13 @@
                     <div class="writer"><%=CmmUtil.nvl(rDTO.getUser_id()) %></div>
 
                     <div class="reg_dt"><%=CmmUtil.nvl(rDTO.getReg_dt()) %></div>
-
                 </div>
+                <%
+                    }
+                %>
             </div>
         </div>
     </div>
-        <%
-            }
-            %>
-
 
 
 
