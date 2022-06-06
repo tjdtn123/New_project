@@ -35,7 +35,7 @@ public class TestController {
         //xml을 Json형식으로 변환
         log.info(this.getClass().getName() + ".xml to json start!");
         HttpURLConnection conn = (HttpURLConnection) new URL("http://apis.data.go.kr/B090041/openapi/service/AstroEventInfoService/getAstroEventInfo?"
-                + "ServiceKey=oThJMbfU%2FWNX0OaMTfVfg7iP%2FysoIW9p%2FtfgGFtccPJjgvoMlTXF%2BEKwsesm%2Bneiugst4PREez3oA2MOkIcCgQ%3D%3D&solYear=2017&solMonth=09").openConnection();
+                + "ServiceKey=oThJMbfU%2FWNX0OaMTfVfg7iP%2FysoIW9p%2FtfgGFtccPJjgvoMlTXF%2BEKwsesm%2Bneiugst4PREez3oA2MOkIcCgQ%3D%3D&solYear=2019&solMonth=09").openConnection();
         conn.connect();
         BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
         BufferedReader reader = new BufferedReader(new InputStreamReader(bis));

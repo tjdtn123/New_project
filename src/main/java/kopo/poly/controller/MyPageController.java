@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Slf4j
@@ -27,8 +26,8 @@ public class MyPageController {
         return "/mypage/Mypage";
     }
 
-    @GetMapping(value = "/MyInfo")
-    private String Myinfo(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
+    @GetMapping(value = "/Myinfo")
+    private String Myinfo(ModelMap model, HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".Myinfo Start!");
 
@@ -46,7 +45,7 @@ public class MyPageController {
 
         model.addAttribute("Myinfo", rDTO);
 
-        return "/MyInfo";
+        return "/mypage/Myinfo";
     }
 
 

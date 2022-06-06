@@ -15,7 +15,7 @@
 
     <div class="wrap">
         <a class="btn-0" href="#">내 별자리</a>
-        <a class="btn-1" href="#">회원 정보</a>
+        <a class="btn-1" href="/mypage/Myinfo">회원 정보</a>
     </div>
     <div class="wrap">
         <a class="btn-6" href="/PwdChange">비밀번호 변경<span></span></a>

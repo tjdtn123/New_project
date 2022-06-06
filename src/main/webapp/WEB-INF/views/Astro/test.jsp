@@ -8,26 +8,17 @@ String locdate = (String) request.getAttribute("locdate");
 String astroEvent = (String) request.getAttribute("astroEvent");
 String astroTime = (String) request.getAttribute("astroTime");
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-
+<%@include file="../import/heads.jsp"%>    
         <title>The Big Picture - Start Bootstrap Template</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="/assets/wallpaper.jpg" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" />
-        <style>
-            body {
-                background-image : url("static/assets/wallpaper.jpg");
-            }
-        </style>
-        <style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+<style>
+                *{
+                        font-family: 'Gowun Dodum', sans-serif;
+                        color: white;
+                }
             right{
                 float: right;
             }
@@ -35,28 +26,8 @@ String astroTime = (String) request.getAttribute("astroTime");
 
 </head>
 <body>
-<!-- Navigation-->
+<%@include file="../import/Navigation.jsp"%>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container px-4 px-lg-5" >
-                <a class="navbar-brand" href="#!">Start Bootstrap</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                        <ul class="navbar-nav ml-auto">
-                                <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Services</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                        </ul>
-                </div>
-                <div class="collapse navbar-collapse" align="right">
-                        <ul class="navbar-nav ml-auto">
-                                <li class="nav-item"><a class="nav-link" href="#!">로그인</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">마이페이지</a></li>
-                        </ul>
-                </div>
-        </div>
-</nav>
 <br>
 <!-- Page Content-->
 <section>
@@ -69,20 +40,20 @@ String astroTime = (String) request.getAttribute("astroTime");
                 </div>
         </div>
 </section>
-<tr>
+<div>
 
-        <td align="center" >
-                <%=CmmUtil.nvl(astroTitle) %>
-        </td><br>
-        <td align="center" >
-                <%=CmmUtil.nvl(locdate)%>
-        </td><br>
-        <td align="center" >
-                <%=CmmUtil.nvl(astroEvent) %>
-        </td>
+        <div>
+                <p><%=CmmUtil.nvl(astroTitle) %></p>
+        </div><br>
+        <div>
+                <p><%=CmmUtil.nvl(locdate)%></p>
+        </div><br>
+        <div>
+                <p><%=CmmUtil.nvl(astroEvent) %></p>
+        </div>
 
 
-</tr>
+</div>
 
 
 

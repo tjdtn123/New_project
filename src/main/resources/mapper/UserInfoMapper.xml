@@ -39,7 +39,7 @@
 	<select id="SelectUser" resultType="UserInfoDTO">
 		SELECT USER_NAME, EMAIL, ADDR1, ADDR2
 		FROM USER
-		WHERE USER_ID = #{USER_ID}
+		WHERE USER_ID = #{user_id}
 	</select>
 			
 </mapper>

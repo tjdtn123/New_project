@@ -4,52 +4,70 @@
          pageEncoding="UTF-8"%>
 <%
     UserInfoDTO rDTO = (UserInfoDTO) request.getAttribute("Myinfo");
+
 %>
 <%@include file="../import/heads.jsp"%>
 
     <title>마이페이지</title>
+<script>
+    function doEdit() {
 
+            location.href = "/board/BoardEditInfo";
+
+    }
+</script>
 </head>
 <body>
 <%@include file="../import/Navigation.jsp"%>
-<table border="1">
-    <col width="100px"/>
-    <col width="200px"/>
-    <col width="100px"/>
-    <col width="200px"/>
-    <tr>
-        <td align="center">제목</td>
-        <td colspan="3"><%=CmmUtil.nvl(rDTO.getTitle())%>
-        </td>
-    </tr>
-    <tr>
-        <td align="center">공지글 여부</td>
-        <td colspan="3">예<input type="radio" name="noticeYn" value="1"
-                <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "1") %>/>
-            아니오<input type="radio" name="noticeYn" value="2"
-                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "2") %>/>
-        </td>
-    </tr>
-    <tr>
-        <td align="center">작성일</td>
-        <td><%=CmmUtil.nvl(rDTO.getReg_dt())%>
-        </td>
-        <td align="center">조회수</td>
-        <td><%=CmmUtil.nvl(rDTO.getRead_cnt())%>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="4" height="300px" valign="top">
-            <%=CmmUtil.nvl(rDTO.getContents()).replaceAll("\r\n", "<br/>") %>
-        </td>
-    </tr>
-    <tr>
-        <td align="center" colspan="4">
-            <a href="javascript:doEdit();">[수정]</a>
-            <a href="javascript:doDelete();">[삭제]</a>
-            <a href="javascript:doList();">[목록]</a>
-        </td>
-    </tr>
-</table>
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="card shadow-lg border-0 rounded-lg mt-5">
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">회원정보</h3></div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <label>이름</label>
+                                                <div colspan="3"><%=CmmUtil.nvl(rDTO.getUser_name())%></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <label>이메일</label>
+                                                <div colspan="3"><%=CmmUtil.nvl(rDTO.getEmail())%></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <label>주소</label>
+                                                <div colspan="3"><%=CmmUtil.nvl(rDTO.getAddr1())%></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3 mb-md-0">
+                                                <label>상세주소</label>
+                                                <div colspan="3"><%=CmmUtil.nvl(rDTO.getAddr2())%></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div colspan="4">
+                                            <a href="javascript:doEdit();">[수정]</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+
 </body>
 

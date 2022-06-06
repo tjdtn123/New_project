@@ -89,25 +89,31 @@
 <br>
 <br>
 <br>
-    <form name="f" method="post" action="/board/BoardInsert" target="ifrPrc" onsubmit="return doSubmit(this);">
-        <div align="center">제목</div>
-        <div><input type="text" name="title" maxlength="100" style="width: 450px" /></div>
+<div class="container">
 
-
-        <div align="center">공지글 여부</div>
-        <div>
-            예<input type="radio" name="noticeYn" value="1" />
-            아니오<input type="radio" name="noticeYn" value="2" />
-        </div>
-        <div>
-              <textarea name="contents" id="contents"></textarea>
-        </div>
-        <div align="center" colspan="2">
-            <input type="submit" value="등록" />
-            <input type="reset" value="다시 작성" />
-        </div>
-    </form>
-
+    <h3>글 쓰기</h3>
+        <form name="f" method="post" action="/board/BoardInsert" target="ifrPrc" onsubmit="return doSubmit(this);">
+            <div class="form-check">
+                <label for="title">제목</label>
+                <input type="text" id="title" name="title" maxlength="100" style="width: 450px" />
+            </div>
+            <div class="form-check">
+                <label for="noticeYn">공지글 여부</label>
+                <div>
+                    예<input type="radio" id="noticeYn" name="noticeYn" value="1" />
+                    아니오<input type="radio" name="noticeYn" value="2" />
+                </div>
+            </div>
+            <div class="form-check">
+                <label for="contents">내용</label>
+                  <textarea name="contents" id="contents" class="form-control"></textarea>
+            </div>
+            <div>
+                <input type="submit" class="btn" value="등록" />
+                <input type="reset" class="btn" value="다시 작성" />
+            </div>
+        </form>
+</div>
 <iframe name="ifrPrc" style="display:none"></iframe>
 
 <!-- 글쓰기 에디터 실행-->

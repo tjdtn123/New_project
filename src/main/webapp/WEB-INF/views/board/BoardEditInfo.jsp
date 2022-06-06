@@ -3,23 +3,28 @@
 <%@ page import="kopo.poly.util.CmmUtil" %>
 <%@ page import="kopo.poly.dto.BoardDTO" %>
 <%
-BoardDTO rDTO = (BoardDTO)request.getAttribute("rDTO");
+	BoardDTO rDTO = (BoardDTO)request.getAttribute("rDTO");
 
-//공지글 정보를 못불러왔다면, 객체 생성
-if (rDTO==null){
-	rDTO = new BoardDTO();
+	//공지글 정보를 못불러왔다면, 객체 생성
+	if (rDTO==null){
+		rDTO = new BoardDTO();
 
-}
+	}
 
-int access = 1; //(작성자 : 2 / 다른 사용자: 1) 
+	int access = 1; //(작성자 : 2 / 다른 사용자: 1)
 	String id_session = CmmUtil.nvl((String) session.getAttribute("user_id"));
-if (id_session.equals(CmmUtil.nvl(rDTO.getUser_id()))) {
-	access = 2;
-}
+	System.out.println("아이디 : " +id_session);
+	System.out.println("rDTO 아이디 : " + CmmUtil.nvl(rDTO.getUser_id()));
+
+	if (id_session.equals(CmmUtil.nvl(rDTO.getUser_id()))) {
+		access = 2;
+	}
 %>
 <%@include file="../import/heads.jsp"%>
 	<title>게시판 글쓰기</title>
-
+	<script src="/js/MyUploadAdpater.js"></script>
+	<!-- CKEditor 5 CDN 적용-->
+	<script src="/ckeditor/build/ckeditor.js"></script>
 	
 	<style>
 		right{
@@ -100,7 +105,12 @@ function calBytes(str){
 	
 	return tcount;
 }
-
+function MyCustomUploadAdapterPlugin( editor ) {
+	editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+		return new MyUploadAdapter( loader );
+	}
+}
+</script>
 </script>
 
 </head>
@@ -118,42 +128,50 @@ function calBytes(str){
 	</div>
 </section>
 <h2>글 수정!</h2>
-<form name="f" method="post" action="board/BoardUpdate" onsubmit="return doSubmit(this);">
+<form name="f" method="post" action="/board/BoardUpdate" onsubmit="return doSubmit(this);">
 <input type="hidden" name="nSeq" value="<%=CmmUtil.nvl(request.getParameter("nSeq")) %>" />
-	<table border="1">
-		<col width="100px" />
-		<col width="500px" />
-		<tr>
-			<td align="center">제목</td>
-			<td>
+	<div border="1">
+		<div>
+			<div align="center">제목</div>
+			<div>
 			<input type="text" name="title" maxlength="100" 
 				   value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" style="width: 450px"/>
-			</td>
-		</tr>
-		<tr>
-			<td align="center">공지글 여부</td>
-			<td>
+			</div>
+		</div>
+		<div>
+			<div align="center">공지글 여부</div>
+			<div>
 				예<input type="radio" name="noticeYn" value="1"
 						<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "1") %>	/>
 			        아니오<input type="radio" name="noticeYn" value="2" 
 			        	<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "2") %>	/>
-			</td>
-		</tr>
-		<tr>
-			<td colspan="2">
-				<textarea 
-						name="contents" style="width: 550px; height: 400px"
-						><%=CmmUtil.nvl(rDTO.getContents()) %></textarea>
-			</td>
-		</tr>
-	<tr>
-		<td align="center" colspan="2">
+			</div>
+		</div>
+		<div>
+			<div colspan="2">
+				<textarea id="contents" name="contents" style="width: 550px; height: 400px"><%=CmmUtil.nvl(rDTO.getContents())%></textarea>
+			</div>
+		</div>
+	<div>
+		<div align="center" colspan="2">
 			<input type="submit" value="수정" />
 			<input type="reset" value="다시 작성" />
-		</td>
-	</tr>		
-	</table>
+		</div>
+	</div>
+	</div>
 </form>
+<script>
+	ClassicEditor
+			.create( document.querySelector('#contents' ),{
+				extraPlugins: [ MyCustomUploadAdapterPlugin ],
+			})
+			.then( editor => {
+				window.editor = editor;
+			} )
+			.catch( error => {
+				console.error(error);
+			})
 
+</script>
 </body>
 </html>
