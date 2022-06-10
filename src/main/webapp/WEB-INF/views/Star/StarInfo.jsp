@@ -1,12 +1,10 @@
 <%@ page import="kopo.poly.util.CmmUtil" %>
+<%@ page import="kopo.poly.dto.StarDTO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%
-String astroTitle = (String) request.getAttribute("astroTitle");
-String locdate = (String) request.getAttribute("locdate");
-String astroEvent = (String) request.getAttribute("astroEvent");
-String astroTime = (String) request.getAttribute("astroTime");
+        StarDTO rDTO = (StarDTO)request.getAttribute("rDTO");
 %>
 <%@include file="../import/heads.jsp"%>    
         <title>The Big Picture - Start Bootstrap Template</title>
@@ -40,20 +38,29 @@ String astroTime = (String) request.getAttribute("astroTime");
                 </div>
         </div>
 </section>
+<img src="<%=CmmUtil.nvl(rDTO.getPicture())%>">
+
+
 <div>
 
         <div>
-                <p><%=CmmUtil.nvl(astroTitle) %></p>
+                <p><%=CmmUtil.nvl(rDTO.getStar_name()) %></p>
         </div><br>
         <div>
-                <p><%=CmmUtil.nvl(locdate)%></p>
+                <p><%=CmmUtil.nvl(rDTO.getPosition())%></p>
         </div><br>
         <div>
-                <p><%=CmmUtil.nvl(astroEvent) %></p>
-        </div>
-
+                <p><%=CmmUtil.nvl(rDTO.getSeason()) %></p>
+        </div><br>
+        <div>
+                <p><%=CmmUtil.nvl(rDTO.getStar_cnt()) %></p>
+        </div><br>
+        <button class="btn btn--block card__btn" onclick="doinsert('<%=CmmUtil.nvl(rDTO.getStar_name())%>')">내 별자리 등록</button>
+        <button class="btn btn--block card__btn" onclick="history.back()">목록</button>
 
 </div>
+
+
 <!--
 <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
@@ -71,7 +78,7 @@ String astroTime = (String) request.getAttribute("astroTime");
                                                                                                 <input class="form-control" id="user_id" name="user_id" type="text" required oninput="idCheck()" />
                                                                                                 <span class="id_ok">사용 가능한 아이디입니다.</span>
                                                                                                 <span class="id_already">중복된 아이디입니다</span>
-                                                                                                <!-- <span class="id_length">8자 이상 입력해주세요</span>
+                                                                                                <span class="id_length">8자 이상 입력해주세요</span>
                                                                                                 <label for="user_id">아이디</label>
 
                                                                                         </div>
@@ -119,11 +126,33 @@ String astroTime = (String) request.getAttribute("astroTime");
 </div>
 -->
 
+<script>
+        function doinsert(){
+                var star_name = '<%=CmmUtil.nvl(rDTO.getStar_name())%>';
+                var position = '<%=CmmUtil.nvl(rDTO.getPosition())%>';
+                var season = '<%=CmmUtil.nvl(rDTO.getSeason())%>';
+                var star_cnt = '<%=CmmUtil.nvl(rDTO.getStar_cnt())%>';
+                var picture = '<%=CmmUtil.nvl(rDTO.getPicture())%>';
 
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" type=""></script>
-<!-- Core theme JS-->
-<script src="static/js/scripts.js"></script>
+                $.ajax({
+                        url : '/Star/insertmine',
+                        type : 'post',
+                        data : {'star_name': star_name,
+                                'position' : position,
+                                'season' : season,
+                                'star_cnt' : star_cnt,
+                                'picture' : picture
+                        },
+                        success : function(data){
+                                if (data == 1){
+                                        alert("등록되었습니다");
+                                }
+                        }
+                });
+        }
+
+
+
+</script>
 </body>
 </html>

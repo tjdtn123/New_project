@@ -33,13 +33,37 @@
 		SELECT USER_ID,PASSWORD
 		FROM USER
 		WHERE USER_ID = #{user_id}
-		  AND PASSWORD = #{password}
+
+	</select>
+
+	<select id="userListCnt" resultType="int">
+		SELECT count(*)
+		FROM USER
 	</select>
 
 	<select id="SelectUser" resultType="UserInfoDTO">
-		SELECT USER_NAME, EMAIL, ADDR1, ADDR2
+		SELECT *
 		FROM USER
 		WHERE USER_ID = #{user_id}
 	</select>
-			
+
+	<select id="getUserList" resultType="UserInfoDTO">
+		SELECT *
+		FROM USER
+		LIMIT #{skip},#{amount}
+
+	</select>
+
+	<update id="UpdateUser" parameterType="UserInfoDTO">
+		UPDATE USER SET
+			USER_NAME = #{user_name},EMAIL = #{email},ADDR1 = #{addr1}, ADDR2 = #{addr2}
+		WHERE
+			USER_ID = #{user_id}
+	</update>
+
+	<delete id="DeleteUser" parameterType="BoardDTO">
+		DELETE  FROM USER
+		WHERE USER_ID = #{user_id}
+
+	</delete>
 </mapper>

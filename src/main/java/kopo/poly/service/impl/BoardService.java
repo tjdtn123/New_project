@@ -5,7 +5,6 @@ import kopo.poly.dto.BoardDTO;
 import kopo.poly.persistance.mapper.IBoardMapper;
 import kopo.poly.service.IBoardService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +15,6 @@ import java.util.List;
 public class BoardService implements IBoardService {
    
     private final IBoardMapper boardMapper;
-
-    @Autowired
     public BoardService(IBoardMapper boardMapper) {
         this.boardMapper = boardMapper;
     }

@@ -1,0 +1,66 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.board_list_warp {
+    padding: 50px;
+}
+
+.board_list_head,
+.board_list_body .item {
+    padding: 10px 0;
+    font-size: 0;
+
+}
+
+.board_list_head {
+    border-top: 2px solid green;
+    border-bottom: 1px solid #ccc;
+}
+
+.board_list_body .item {
+    border-bottom: 1px solid #ccc;
+}
+
+.board_list_head > div,
+.board_list_body .item > div {
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+
+}
+
+.board_list_head > div {
+    font-weight: 600;
+}
+
+.board_list .c1 {
+    width: 15%;
+
+}
+
+.board_list .c2 {
+    width: 15%;
+}
+
+.board_list_body div.c1 {
+    text-align: center;
+}
+
+.board_list_body div.c1 a:hover {
+    text-decoration: underline;
+
+}
+
+.board_list .c3 {
+    width: 10%;
+}
+
+.board_list .c4 {
+    width: 30%;
+}
+
+.board_list .c5 {
+    width: 30%;
+}

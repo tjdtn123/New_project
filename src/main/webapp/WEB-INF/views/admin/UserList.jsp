@@ -3,22 +3,23 @@
          pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="kopo.poly.dto.BoardDTO" %>
+<%@ page import="kopo.poly.dto.UserInfoDTO" %>
 <%@ page import="kopo.poly.util.CmmUtil" %>
 <%@ page import="kopo.poly.dto.PageMakeDTO" %>
+
 <%
     session.getAttribute("user_id");
-    List<BoardDTO> rList = (List<BoardDTO>) request.getAttribute("rList");
+    List<UserInfoDTO> rList = (List<UserInfoDTO>) request.getAttribute("rList");
     //게시판 조회 결과 보여주기
     if (rList == null) {
-        rList = new ArrayList<BoardDTO>();
+        rList = new ArrayList<UserInfoDTO>();
 
     }
 
 %>
 <%@include file="../import/heads.jsp"%>
-    <title>공지 리스트</title>
-<link rel="stylesheet" href="../css/table.css?after">
+    <title>회원목록</title>
+<link rel="stylesheet" href="../css/UserList.css?after">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
@@ -32,7 +33,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #6667ab ;
+            background-image: url("/assets/wallpaper.jpg");
             background-size: cover;
             -webkit-filter: blur(5px);
             -moz-filter: blur(5px);
@@ -63,7 +64,7 @@
          }
          *{
              font-family: 'Gowun Dodum', sans-serif;
-             color: black;
+             color: white;
          }
 
     </style>
@@ -71,8 +72,8 @@
     <script type="text/javascript">
 
         //상세보기 이동
-        function doDetail(seq) {
-            location.href = "/board/BoardInfo?nSeq=" + seq;
+        function doDetail(user_id) {
+            location.href = "/admin/Userinfo?user_id=" + user_id;
         }
 
     </script>
@@ -88,43 +89,34 @@
     <div class="board_list_warp" >
         <div class="board_list">
             <div class="board_list_head">
-                <div class="num">순번</div>
-                <div class="tit">제목</div>
-                <div class="read_cnt">조회수</div>
-                <div class="writer">등록자</div>
-                <div class="reg_dt">등록일</div>
+                <div class="c1">아이디</div>
+                <div class="c2">비밀번호</div>
+                <div class="c3">이름</div>
+                <div class="c4">이메일</div>
+                <div class="c5">가입일</div>
             </div>
             <div class="board_list_body">
             <%
                 for (int i = 0; i < rList.size(); i++) {
-                    BoardDTO rDTO = rList.get(i);
+                    UserInfoDTO rDTO = rList.get(i);
 
                     if (rDTO == null) {
-                        rDTO = new BoardDTO();
+                        rDTO = new UserInfoDTO();
                     }
             %>
                 <div class="item">
-                    <%
-                        //공지글이라면, [공지]표시
-                        if (CmmUtil.nvl(rDTO.getNotice_yn()).equals("1")) {
-                            out.print("<div class='num'><b>[공지]</b></div>");
-
-                            //공지글이 아니라면, 글번호 보여주기
-                        } else {
-                            out.print("<div class='num'>"+CmmUtil.nvl(rDTO.getBoard_seq())+"</div>");
-
-                        }
-                    %>
-                    <div class="tit">
-                    <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getBoard_seq())%>');">
-                            <%=CmmUtil.nvl(rDTO.getTitle()) %>
+                    <div class="c1"><%=CmmUtil.nvl(rDTO.getUser_id())%></div>
+                        
+                    <div class="c2">
+                    <a href="javascript:doDetail('<%=CmmUtil.nvl(rDTO.getUser_id())%>');">
+                            <%=CmmUtil.nvl(rDTO.getPassword()) %>
                     </a>
                     </div>
-                    <div class="read_cnt"><%=CmmUtil.nvl(rDTO.getRead_cnt()) %></div>
+                    <div class="c3"><%=CmmUtil.nvl(rDTO.getUser_name()) %></div>
 
-                    <div class="writer"><%=CmmUtil.nvl(rDTO.getUser_id()) %></div>
+                    <div class="c4"><%=CmmUtil.nvl(rDTO.getEmail()) %></div>
 
-                    <div class="reg_dt"><%=CmmUtil.nvl(rDTO.getReg_dt()) %></div>
+                    <div class="c5"><%=CmmUtil.nvl(rDTO.getReg_dt()) %></div>
                 </div>
                 <%
                     }
@@ -159,7 +151,7 @@
             <input type="hidden" name="amount" value="${pageMaker.cri.amount }">
         </form>
     </div>
-    <a href="/board/BoardReg">[글쓰기]</a>
+
 
     <script type="text/javascript">
 
@@ -168,8 +160,8 @@
         $(".move").on("click", function (e){
             e.preventDefault();
 
-            moveForm.append("<input type='hidden' name ='board_seq' value='"+ $(this).attr("href")+ "'>");
-            moveForm.attr("action", "board/BoardInfo");
+            moveForm.append("<input type='hidden' name ='user_id' value='"+ $(this).attr("href")+ "'>");
+            moveForm.attr("action", "/admin/UserInfo");
             moveForm.submit();
         });
 
@@ -178,7 +170,7 @@
 
             e.preventDefault();
             moveForm.find("input[name='pageNum']").val($(this).attr("href"));
-            moveForm.attr("action", "/board/BoardList");
+            moveForm.attr("action", "/admin/UserList");
             moveForm.submit();
 
         });

@@ -3,8 +3,7 @@
          pageEncoding="UTF-8"%>
 <%
 //전달받은 메시지
-String msg = "로그아웃 되었습니다";
-session.invalidate();
+String msg = CmmUtil.nvl((String)request.getAttribute("msg"));
 %>
 <!DOCTYPE html>
 <html>

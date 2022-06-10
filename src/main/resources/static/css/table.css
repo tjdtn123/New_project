@@ -9,12 +9,12 @@
 
 .board_list_head,
 .board_list_body .item {
-    padding: 1000px 0;
+    font-size: 0px;
 
 }
 
 .board_list_head {
-    border-top: 2px solid palegoldenrod;
+    border-top: 2px solid green;
     border-bottom: 1px solid #ccc;
 }
 
@@ -25,7 +25,8 @@
 .board_list_head > div,
 .board_list_body .item > div {
     display: inline-block;
-    text-align: center;
+    background: yellow;
+    font-size: 14px;
 
 }
 
@@ -35,14 +36,16 @@
 
 .board_list .num {
     width: 10%;
+    text-align: center;
 
 }
 
 .board_list .tit {
-    width: 55%;
+    width: 45%;
+    text-align: center;
 }
 
-.board_list_body div.tit {
+.board_list_body div.tit div.num div.writer div.read_cnt div.reg_dt {
     text-align: center;
 }
 
@@ -52,15 +55,18 @@
 }
 
 .board_list .writer {
-    width: 10%;
+    width: 15%;
+    text-align: center;
 }
 
 .board_list .reg_dt {
-    width: 15%;
+    width: 20%;
+    text-align: center;
 }
 
 .board_list .read_cnt {
     width: 10%;
+    text-align: center;
 }
 
 /* paging

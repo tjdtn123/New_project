@@ -7,10 +7,10 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a class="nav-link" href="/Star000">별자리</a></li>
-                <li class="nav-item"><a class="nav-link" href="/History000">우주 현상 </a></li>
-                <li class="nav-item"><a class="nav-link" href="Obs000">국내 천문대</a></li>
-                <li class="nav-item"><a class="nav-link" href="board/BoardList">게시판</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/Star/selectSeason">별자리</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Astro/selectDate">우주 현상 </a></li>
+                <li class="nav-item"><a class="nav-link" href="/observer/selectRegion">국내 천문대</a></li>
+                <li class="nav-item"><a class="nav-link" href="/board/BoardList">게시판</a></li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <% if(session.getAttribute("user_id") == null){%>

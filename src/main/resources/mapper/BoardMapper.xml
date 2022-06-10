@@ -18,7 +18,9 @@
 		             DATE_FORMAT(B.REG_DT, '%Y-%m-%d') AS REG_DT
 			FROM BOARD B, USER U
 			WHERE B.USER_ID = U.USER_ID
-			ORDER BY B.NOTICE_YN, B.REG_DT DESC) AS T1
+			) AS T1
+		ORDER BY NOTICE_YN, BOARD_SEQ
+
 		LIMIT #{skip},#{amount}
 
 	</select>

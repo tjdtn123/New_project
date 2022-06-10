@@ -1,10 +1,14 @@
 package kopo.poly.controller;
 
 
+import kopo.poly.Criteria.Criteria;
+import kopo.poly.dto.PageMakeDTO;
 import kopo.poly.dto.UserInfoDTO;
 import kopo.poly.service.IUserInfoService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 
 /*
@@ -31,6 +38,8 @@ public class UserInfoController {
 
     @Resource(name = "UserInfoService")
     private IUserInfoService userInfoService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "LoginPage")
     public String LoginPage() {
@@ -72,8 +81,10 @@ public class UserInfoController {
         String user_id = CmmUtil.nvl(request.getParameter("user_id"));
         String password = CmmUtil.nvl(request.getParameter("password"));
 
+
         log.info("user_id : " + user_id);
         log.info("password : " + password);
+
 
         UserInfoDTO pDTO = new UserInfoDTO();
 
@@ -82,26 +93,38 @@ public class UserInfoController {
 
         UserInfoDTO uDTO = userInfoService.Login(pDTO);
 
+
         msg = "로그인 성공";
+        if (!passwordEncoder.matches(password, uDTO.getPassword())) {
 
-        if (uDTO != null) {
-            session.setAttribute("user_id", uDTO.getUser_id());
-            log.info(this.getClass().getName() + ".Login end!");
-
-            log.info(uDTO.toString());
-            // 결과 메시지 전달하기
-            model.addAttribute("msg", msg);
-            return "/MsgToLogin";
-        } else
             msg = "아이디 또는 비밀번호를 확인해주세요.";
             model.addAttribute("msg", msg);
 
+            return "/MsgToLogin";
+
+        }
+        else if(Objects.equals(CmmUtil.nvl(uDTO.getUser_id()), "admin")) {
+
+                session.setAttribute("user_id", uDTO.getUser_id());
+                log.info(this.getClass().getName() + ".Login end!");
+
+                log.info(uDTO.toString());
+                // 결과 메시지 전달하기
+
+                return "/admin/AdminPage";
+        }
+
+        else
+        session.setAttribute("user_id", uDTO.getUser_id());
+        log.info(this.getClass().getName() + ".Login end!");
+
+        log.info(uDTO.toString());
+        // 결과 메시지 전달하기
+        model.addAttribute("msg", msg);
         return "/MsgToLogin";
 
 
-
     }
-
     @PostMapping(value = "/Userinfoinsert")
     public String userinfoInsert(HttpServletRequest request, ModelMap model) {
 
@@ -118,7 +141,7 @@ public class UserInfoController {
             String user_name = CmmUtil.nvl(request.getParameter("user_name"));
             String email = CmmUtil.nvl(request.getParameter("emailText")); // 공지글 여부
             String addr1 = CmmUtil.nvl(request.getParameter("addr1")); // 내용
-            String addr2 = CmmUtil.nvl(request.getParameter("addr2"));
+            String addr2 = CmmUtil.nvl(request.getParameter("sample6_detailAddress"));
 
             /*
              * ####################################################################################
@@ -131,6 +154,8 @@ public class UserInfoController {
             log.info("email : " + email);
             log.info("addr1 : " + addr1);
             log.info("addr2 : " + addr2);
+
+
 
             UserInfoDTO uDTO = new UserInfoDTO();
 
@@ -221,6 +246,39 @@ public class UserInfoController {
 
         return "/MsgToLogin";
     }
+    @GetMapping(value = "/admin/UserList")
+    public String UserList(ModelMap model, Criteria cri)
+            throws Exception {
+
+        // 로그 찍기(추후 찍은 로그를 통해 이 함수에 접근했는지 파악하기 용이하다.)
+        log.info(this.getClass().getName() + ".UserList start!");
+        // 공지사항 리스트 가져오기
+        List<UserInfoDTO> rList = userInfoService.getUserList(cri);
+
+        if (rList == null) {
+            rList = new ArrayList<>();
+
+        }
+
+        //전체 글 개수
+        int total = userInfoService.userListCnt();
+
+        //페이징 객체
+        PageMakeDTO pageMake = new PageMakeDTO(cri, total);
+
+
+        // 조회된 리스트 결과값 넣어주기
+        model.addAttribute("rList", rList);
+        model.addAttribute("pageMaker",pageMake);
+
+        // 로그 찍기(추후 찍은 로그를 통해 이 함수 호출이 끝났는지 파악하기 용이하다.)
+        log.info(this.getClass().getName() + ".UserList end!");
+
+        // 함수 처리가 끝나고 보여줄 JSP 파일명(/WEB-INF/view/notice/NoticeList.jsp)
+        return "/admin/UserList";
+
+    }
+
 
     @PostMapping("/register/idCheck")
     @ResponseBody

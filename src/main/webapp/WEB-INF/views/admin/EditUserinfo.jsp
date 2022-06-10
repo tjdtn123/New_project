@@ -1,14 +1,19 @@
+<%@ page import="kopo.poly.dto.UserInfoDTO" %>
+<%@ page import="kopo.poly.util.CmmUtil" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
+<%
+    UserInfoDTO rDTO = (UserInfoDTO) request.getAttribute("EditUserinfo");
+
+%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-
-        <title>회원가입</title>
+        <title>회원정보 수정</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="/assets/wallpaper.jpg" />
         <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -35,24 +40,7 @@ pageEncoding="UTF-8"%>
                 content: "";
             }
         </style>
-        <script src="js/emailApi.js"></script>
-        <style>
-            .id_ok {
-                color: #033af5; display: none;
-            }
-            .id_already{
-                color: #d40505; display: none;
-            }
-            .id_length{
-                color: #033af5; display: none;
-            }
-            right {
-                float: right;
-            }
-
-
-        </style>
-
+        <script src="../js/emailApi.js"></script>
         <script type="text/javascript">
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ이메일 인증ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
             function emailSend() {
@@ -62,7 +50,7 @@ pageEncoding="UTF-8"%>
                 console.log('입력 이메일' + clientEmail);
 
                 if(emailYN == true){
-                    alert('인증 메일을 발송했습니다');
+                    alert('이메일 형식입니다');
 
                     $.ajax({
                         type:"POST",
@@ -167,16 +155,19 @@ pageEncoding="UTF-8"%>
                 }
 
 
-            }
 
+
+            }
+            function doSubmit(user_id){
+                location.href = "/admin/DeleteUser?user_id=" + user_id;
+            }
 
 
 
         </script>
     </head>
-
     <body class="bg-primary" >
-    <%@include file="import/Navigation.jsp"%>
+    <%@include file="../import/Navigation.jsp"%>
     <section>
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5">
@@ -197,38 +188,20 @@ pageEncoding="UTF-8"%>
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
                                     <div class="card-body">
-                                        <form name="f" method="post" action="/Userinfoinsert" target= "ifrPrc" onsubmit="return doSubmit(this);" >
+                                        <form name="f" method="post" action="/admin/UpdateUser" target= "ifrPrc" onsubmit="return doSubmit(this);" >
                                             <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="user_id" name="user_id" type="text" required oninput="idCheck()" />
-                                                        <span class="id_ok">사용 가능한 아이디입니다.</span>
-                                                        <span class="id_already">중복된 아이디입니다</span>
-                                                       <!-- <span class="id_length">8자 이상 입력해주세요</span> -->
-                                                        <label for="user_id">아이디</label>
-
-                                                    </div>
-                                                </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="password" name="password" type="password"  />
-                                                        <label for="password">비밀번호</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="user_name" name="user_name" type="text"  />
+                                                        <input class="form-control" id="user_name" name="user_name" type="text" value="<%=CmmUtil.nvl(rDTO.getUser_name())%>" />
                                                         <label for="user_name">이름</label>
-
                                                     </div>
                                                 </div>
 
                                                 <div class = "col-md-10">
                                                     <div class="form-floating mb-3">
-                                                        <input class="form-control" id="emailText" name="emailText" type="email"  />
+                                                        <input class="form-control" id="emailText" name="emailText" type="email" value="<%=CmmUtil.nvl(rDTO.getEmail())%>" />
                                                         <label for="emailText">이메일</label>
-
                                                     </div>
                                                 </div>
                                                 <div class = "col-md-10">
@@ -252,21 +225,19 @@ pageEncoding="UTF-8"%>
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <input type="text" name="sample6_postcode" id="sample6_postcode" placeholder="우편번호">
                                                         <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                                                        <input type="text" id="addr1" name="addr1" placeholder="주소"><br>
-                                                        <input type="text" name="sample6_detailAddress" id="sample6_detailAddress" placeholder="상세주소">
+                                                        <input type="text" id="addr1" name="addr1" placeholder="주소" value="<%=CmmUtil.nvl(rDTO.getAddr1())%>"><br>
+                                                        <input type="text" name="sample6_detailAddress" id="sample6_detailAddress" placeholder="상세주소" value="<%=CmmUtil.nvl(rDTO.getAddr2())%>">
                                                         <input type="text" id="addr2" name="addr2" placeholder="참고항목">
                                                     </div>
                                                 </div>
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid">
-                                                    <input type="submit" value="회원가입"/>
+                                                <div class="d-grid " >
+                                                    <input type="submit" value="수정"/>
+                                                    <input type="button" onclick="doDelete('<%=CmmUtil.nvl(rDTO.getUser_id())%>')" value="회원 삭제">
                                                 </div>
                                             </div>
                                             </div>
                                         </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="LoginPage.jsp">Have an account? Go to login</a></div>
                                     </div>
                                 </div>
                             </div>

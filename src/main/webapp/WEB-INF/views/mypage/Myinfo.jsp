@@ -12,7 +12,7 @@
 <script>
     function doEdit() {
 
-            location.href = "/board/BoardEditInfo";
+            location.href = "/mypage/EditMyinfo";
 
     }
 </script>
