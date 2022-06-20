@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- JAVA와 연결할 Mapper 파일 설정 -->
+<mapper namespace="kopo.poly.persistance.mapper.ICalendarMapper">
+
+	<select id="getCalendar" resultType="CalendarDTO">
+		SELECT *
+		FROM CALENDAR
+		WHERE USER_ID = #{user_id}
+
+	</select>
+
+<!--
+	<insert id="insertCalendar" parameterType="CalendarDTO">
+		insert into CALENDAR (
+			USER_ID, CALENDAR_TITLE,
+		    CALENDAR_MEMO, CALENDAR_START, CALENDAR_END
+
+		) values (
+		    #{user_id},#{calendar_title},#{calendar_memo},#{calender_start},#{calendar_end}
+		)
+
+	</insert>
+
+	<update id="updateCalender" parameterType="CalendarDTO">
+		UPDATE CALENDAR SET
+			CALENDAR_TITLE = #{calendar_title},CALENDAR_MEMO = #{calendar_memo}, CALENDAR_START = #{calendar_start},
+			CALENDAR_END = #{calendar_end}
+		WHERE
+			USER_ID = #{user_id}
+	</update>
+
+	<delete id="deleteCalendar" parameterType="CalendarDTO">
+		DELETE  FROM CALENDAR
+		WHERE USER_ID = #{user_id}
+
+	</delete>
+-->
+</mapper>

@@ -42,6 +42,16 @@ public class BoardController {
         return "index";
 
     }
+    @GetMapping(value = "index_2")
+    public String Index_2() {
+        return "index_2";
+
+    }
+    @GetMapping(value = "testte")
+    public String Testte() {
+        return "testte";
+
+    }
 
 
     /**

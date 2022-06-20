@@ -19,11 +19,7 @@
 <%@include file="../import/heads.jsp"%>
     <title>공지 리스트</title>
 <link rel="stylesheet" href="../css/table.css?after">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <style>
-
         html	{ overflow: hidden; }
         body	{ overflow: auto; }
         body::before {
@@ -32,7 +28,6 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #6667ab ;
             background-size: cover;
             -webkit-filter: blur(5px);
             -moz-filter: blur(5px);
@@ -83,7 +78,10 @@
     <!-- Page Content-->
     <br>
     <br>
-    <h2>공지사항</h2>
+    <header>
+        <h3><strong>공지사항</strong></h3>
+    </header>
+
     <br/>
     <div class="board_list_warp" >
         <div class="board_list">
@@ -140,7 +138,7 @@
                 <ul id="pageInfo" class="pageInfo">
                     <!-- 이전페이지 버튼 -->
                     <c:if test="${pageMaker.prev}">
-                        <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">Previous</a></li>
+                        <li class="pageInfo_btn previous"><a href="${pageMaker.startPage-1}">이전</a></li>
                     </c:if>
                     <!-- 각 번호 페이지 버튼 -->
                     <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
@@ -149,7 +147,7 @@
 
                     <!-- 다음페이지 버튼 -->
                     <c:if test="${pageMaker.next}">
-                        <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">Next</a></li>
+                        <li class="pageInfo_btn next"><a href="${pageMaker.endPage + 1 }">다음</a></li>
                     </c:if>
                 </ul>
             </div>

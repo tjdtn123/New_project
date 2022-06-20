@@ -14,6 +14,8 @@ public interface IMongoService {
 
     List<StarDTO> getStarList(String season) throws Exception;
 
+    List<StarDTO> getAdStarList() throws Exception;
+
     StarDTO getStarInfo(String star_name) throws Exception;
 
     int InsertMine(MyDTO pDTO) throws Exception;

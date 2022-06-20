@@ -12,9 +12,9 @@
     <h1>관리자 페이지</h1>
 
     <div class="wrap">
-        <a class="btn-0" href="#">별자리 관리</a>
+        <a class="btn-0" href="/admin/AdStarList">별자리 관리</a>
         <a class="btn-1" href="/admin/UserList">회원 관리</a>
-        <a class="btn-2" href="#">로그아웃</a>
+        <a class="btn-2" href="/Logout">로그아웃</a>
     </div>
 
 </div>

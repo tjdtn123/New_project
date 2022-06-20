@@ -60,7 +60,7 @@ public class MongoMapper extends AbstractMongoDBComon implements IMongoMapper {
     @Override
     public List<ObsDTO> getObsList(String colNm, String region) throws Exception {
 
-        log.info(this.getClass().getName() + ".getSongList Start!");
+        log.info(this.getClass().getName() + ".getObsList Start!");
 
         // 조회 결과를 전달하기 위한 객체 생성하기
         List<ObsDTO> rList = new LinkedList<>();
@@ -117,7 +117,7 @@ public class MongoMapper extends AbstractMongoDBComon implements IMongoMapper {
             rList.add(rDTO);
 
         }
-        log.info(this.getClass().getName() + ".getSongList End!");
+        log.info(this.getClass().getName() + ".getObsList End!");
 
         return rList;
     }
@@ -187,6 +187,68 @@ public class MongoMapper extends AbstractMongoDBComon implements IMongoMapper {
 
         }
         log.info(this.getClass().getName() + ".getStarList End!");
+
+        return rList;
+    }
+
+    @Override
+    public List<StarDTO> getAdStarList(String colNm) throws Exception {
+
+        log.info(this.getClass().getName() + ".getAdStarList Start!");
+
+        // 조회 결과를 전달하기 위한 객체 생성하기
+        List<StarDTO> rList = new LinkedList<>();
+
+        MongoCollection<Document> col = mongodb.getCollection(colNm);
+
+        // 조회 결과 중 출력할 컬럼들(SQL의 SELECT절과 FROM절 가운데 컬럼들과 유사함)
+        Document projection = new Document();
+        projection.append("star_name", "$star_name");
+        projection.append("position", "$position");
+        projection.append("season", "$season");
+        projection.append("star_cnt", "$star_cnt");
+        projection.append("picture", "$picture");
+
+        // MongoDB는 무조건 ObjectId가 자동생성되며, ObjectID는 사용하지 않을때, 조회할 필요가 없음
+        // ObjectId를 가지고 오지 않을 때 사용함
+        projection.append("_id", 0);
+
+        // MongoDB의 find 명령어를 통해 조회할 경우 사용함
+        // 조회하는 데이터의 양이 적은 경우, find를 사용하고, 데이터양이 많은 경우 무조건 Aggregate 사용한다.
+        FindIterable<Document> rs = col.find().projection(projection);
+
+        for (Document doc : rs) {
+            if (doc == null) {
+                doc = new Document();
+
+            }
+
+            // 조회 잘되나 출력해 봄
+            String star_name = CmmUtil.nvl(doc.getString("star_name"));
+            String position = CmmUtil.nvl(doc.getString("position"));
+            String seasoni = CmmUtil.nvl(doc.getString("season"));
+            String star_cnt = CmmUtil.nvl(doc.getString("star_cnt"));
+            String picture = CmmUtil.nvl(doc.getString("picture"));
+
+            log.info("star_name : " + star_name);
+            log.info("position : " + position);
+            log.info("season : " + seasoni);
+            log.info("star_cnt : " + star_cnt);
+            log.info("picture : " + picture);
+
+            StarDTO rDTO = new StarDTO();
+
+            rDTO.setStar_name(star_name);
+            rDTO.setPosition(position);
+            rDTO.setSeason(seasoni);
+            rDTO.setStar_cnt(star_cnt);
+            rDTO.setPicture(picture);
+
+            // 레코드 결과를 List에 저장하기
+            rList.add(rDTO);
+
+        }
+        log.info(this.getClass().getName() + ".getAdStarList End!");
 
         return rList;
     }

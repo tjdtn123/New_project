@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,7 @@ public class HtyController {
 
     }
 
+
     @GetMapping(value =  "/observer/collectObs")
     public String collectObserver(ModelMap model) throws Exception{
 
@@ -63,11 +65,14 @@ public class HtyController {
         return "/observer/MsgToHome";
 
     }
+
+    @ResponseBody
     @GetMapping(value = "/observer/obsPage")
-    public String Obspage(HttpServletRequest request, ModelMap model) throws Exception{
+    public List<ObsDTO> Obspage(HttpServletRequest request, ModelMap model) throws Exception{
         log.info(this.getClass().getName() + ".selectObserver Start!");
 
         String region = CmmUtil.nvl(request.getParameter("region"));
+        log.info(region);
 
         List<ObsDTO> rList = mongoService.getObsList(region);
 
@@ -77,7 +82,7 @@ public class HtyController {
 
         log.info(this.getClass().getName() + ".selectObserver End!");
 
-        return "/observer/ObsList";
+        return rList;
     }
 
     @GetMapping(value = "/Star/StarInfo")

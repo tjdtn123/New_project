@@ -14,10 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 @Slf4j
 @Service
@@ -56,6 +52,7 @@ public class AwsS3Service {
 
 
     public void deleteImage(String fileName) {
+
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
     }
 

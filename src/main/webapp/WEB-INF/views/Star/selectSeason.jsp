@@ -2,14 +2,39 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@include file="../import/heads.jsp"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width text/html, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" type="image/x-icon" href="/assets/wallpaper.jpg" />
+
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
         <title>날짜 선택</title>
+    <!--글꼴 -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/styless.css">
+    <link rel="stylesheet" href="../css/nomal.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="../css/stars.css">
+    <style>
+        *{
+            font-family: 'Gowun Dodum', sans-serif;
+
+        }
+    </style>
 
 </head>
 <body>
 <%@include file="../import/Navigation.jsp"%>
 <br>
 <br>
+
+<div id="stars"></div>
+<div id="stars2"></div>
+<div id="stars3"></div>
 
 <form method="get" action="/Star/StarList">
     <div class="form-row align-items-center">
@@ -29,6 +54,11 @@
         </div>
     </div>
 </form>
+
+<script>
+
+
+</script>
 
 </body>
 </html>

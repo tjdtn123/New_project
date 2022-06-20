@@ -1,6 +1,8 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.StarDTO;
 import kopo.poly.dto.UserInfoDTO;
+import kopo.poly.service.IMongoService;
 import kopo.poly.service.IUserInfoService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -20,6 +23,10 @@ public class AdminController {
 
     @Resource(name = "UserInfoService")
     private IUserInfoService userInfoService;
+
+    @Resource(name = "MongoService")
+    private IMongoService mongoService;
+
     @GetMapping(value = "/AdminPage")
     public String Admin_top() {
         return "/admin/AdminPage";
@@ -155,6 +162,21 @@ public class AdminController {
 
         session.invalidate();
         return "/MsgToIndex";
+    }
+
+    @GetMapping(value = "/AdStarList")
+    public String StarList(ModelMap model, HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + ".selectAdStarList Start!");
+
+        List<StarDTO> rList = mongoService.getAdStarList();
+
+        model.addAttribute("rList",rList);
+
+        log.info(this.getClass().getName() + ".selectAdStarList Start!");
+
+        return "/admin/AdStarList";
+
     }
 
 

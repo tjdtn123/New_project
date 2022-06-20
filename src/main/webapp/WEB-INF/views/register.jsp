@@ -38,13 +38,13 @@ pageEncoding="UTF-8"%>
         <script src="js/emailApi.js"></script>
         <style>
             .id_ok {
-                color: #033af5; display: none;
+
             }
             .id_already{
                 color: #d40505; display: none;
             }
             .id_length{
-                color: #033af5; display: none;
+                color: #033af5; display: inline-block;
             }
             right {
                 float: right;
@@ -122,20 +122,29 @@ pageEncoding="UTF-8"%>
                         type:'post',
                         data:{user_id:user_id},
                         success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다
-                            if(cnt != 1 && user_id.length > 8){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
-                                $('.id_ok').css("display","inline-block");
-                                $('.id_already').css("display", "none");
 
-                            } else if (cnt == 1) {// cnt가 1일 경우 -> 이미 존재하는 아이디
-                                $('.id_already').css("display","inline-block");
-                                $('.id_ok').css("display", "none");
-                            }
+                                if(cnt != 1){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
+                                    $('.id_ok').css("color","#033af5");
+                                    $('.id_ok').html("사용 가능한 아이디입니다");
+
+                                } else {// cnt가 1일 경우 -> 이미 존재하는 아이디
+                                    $('.id_ok').css("color","#f80606");
+                                    $('.id_ok').html("중복된 아이디입니다");
+                                }
+
+
                         },
                             error:function(){
                             alert("에러입니다");
                         }
                     });
             };
+
+            function pwdCheck(){
+                var pwd1 = $('#password').val();
+                var pwd2 = $('#')
+
+            }
 
            //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ우편번호ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
                
@@ -145,6 +154,7 @@ pageEncoding="UTF-8"%>
                     f.user_id.focus();
                     return false;
                 }
+
                 if(f.password.value == ""){
                     alert("비밀번호를 입력하시기 바랍니다.");
                     f.password.focus();
@@ -201,15 +211,12 @@ pageEncoding="UTF-8"%>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="user_id" name="user_id" type="text" required oninput="idCheck()" />
-                                                        <span class="id_ok">사용 가능한 아이디입니다.</span>
-                                                        <span class="id_already">중복된 아이디입니다</span>
-                                                       <!-- <span class="id_length">8자 이상 입력해주세요</span> -->
-                                                        <label for="user_id">아이디</label>
+                                                        <input class="form-control" id="user_id" name="user_id" placeholder="아이디" type="text" required oninput="idCheck()" />
+
 
                                                     </div>
+                                                    <span class="id_ok form-floating mb-3 mb-md-0"></span>
                                                 </div>
-
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <input class="form-control" id="password" name="password" type="password"  />

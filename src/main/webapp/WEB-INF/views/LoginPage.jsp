@@ -2,8 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
 <%@include file="import/heads.jsp"%>
-           <title>The Big Picture - Start Bootstrap Template</title>
-        
+           <title>로그인</title>
+        <link rel="stylesheet" href="/css/login.css">
+        <style>
+            *{
+                font-family: 'Gowun Dodum', sans-serif;
+            }
+        </style>
 
         <script type="text/javascript">
             function doSubmit(f) {
@@ -22,7 +27,7 @@ pageEncoding="UTF-8"%>
 
 
     </head>
-    <body class="bg-primary">
+    <body>
     <%@include file="import/Navigation.jsp"%>
     <!-- Page Content-->
     <section>
@@ -39,41 +44,27 @@ pageEncoding="UTF-8"%>
             </div>
         </div>
     </section>
-        <div id="layoutAuthentication" >
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-5">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
-                                    <div class="card-body">
-                                        <form name="l" action="/Login" method="post" onsubmit="return doSubmit(this);">
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="user_id" name="user_id" type="text" placeholder="user_id" />
-                                                <label for="user_id">아이디</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="password" name="password" type="password" placeholder="Password" />
-                                                <label for="password">비밀번호</label>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="/FindPwd">Forgot Password?</a>
-                                                <input type="submit" value="로그인">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="/register">회원가입</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
+    <div class="login-form">
+        <div class="card-header">
+            <h3 class="text-center font-weight-light my-4">로그인</h3>
+
         </div>
 
+        <form name="l" action="/Login" method="post" onsubmit="return doSubmit(this);">
+            <input type="text" name="user_id" class="text-field" placeholder="아이디"><br>
+            <input type="password" name="password" class="text-field" placeholder="비밀번호"><br>
+            <input type="submit" value="로그인" class="submit-btn">
+        </form>
 
-    </body>
-</html>
+        <div class="links">
+            <a href="/FindPwd">비밀번호를 잊어버리셨나요?</a>
+        </div>
+
+        <div class="links">
+            <a href="/register">회원가입</a>
+        </div>
+
+    </div>
+
+
+<%@include file="import/footer.jsp"%>

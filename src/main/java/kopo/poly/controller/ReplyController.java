@@ -1,26 +1,18 @@
 package kopo.poly.controller;
 
-import kopo.poly.Criteria.Criteria;
-import kopo.poly.dto.BoardDTO;
-import kopo.poly.dto.PageMakeDTO;
 import kopo.poly.dto.ReplyDTO;
-import kopo.poly.service.IBoardService;
 import kopo.poly.service.IReplyService;
-import kopo.poly.service.impl.AwsS3Service;
-import kopo.poly.service.impl.ReplyService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -78,13 +70,13 @@ public class ReplyController {
              */
 
             String user_id = CmmUtil.nvl((String) session.getAttribute("user_id"));//CmmUtil.nvl((String) session.getAttribute("user_id"));
-            String board_seq = CmmUtil.nvl(request.getParameter("board_seq")); // 제목
+            String board_seq = CmmUtil.nvl(request.getParameter("board_seq")); // 게시글 번호
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
 
             /*
              * ####################################################################################
              * 반드시, 값을 받았으면, 꼭 로그를 찍어서 값이 제대로 들어오는지 파악해야함 반드시 작성할 것
-             * ####################################################################################
+             * ###################################################################################
              */
             log.info("user_id : " + user_id);
             log.info("board_seq : " + board_seq);

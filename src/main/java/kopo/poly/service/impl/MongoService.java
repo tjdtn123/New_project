@@ -145,6 +145,28 @@ public class MongoService implements IMongoService {
     }
 
     @Override
+    public List<StarDTO> getAdStarList() throws Exception {
+
+        log.info(this.getClass().getName() + ".getAdStarList Start!");
+
+        // MongoDB에 저장된 컬렉션 이름
+        String colNm = "STARS_02";
+
+        List<StarDTO> rList = null;
+
+        rList = mongoMapper.getAdStarList(colNm);
+
+        if (rList == null){
+            rList = new LinkedList<>();
+        }
+
+        log.info(this.getClass().getName() + ".getAdStarList End!");
+
+        return rList;
+    }
+
+
+    @Override
     public StarDTO getStarInfo(String star_name) throws Exception {
 
         log.info(this.getClass().getName() + ".getStarList Start!");

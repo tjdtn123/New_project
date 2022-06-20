@@ -21,6 +21,7 @@
 			) AS T1
 		ORDER BY NOTICE_YN, BOARD_SEQ
 
+
 		LIMIT #{skip},#{amount}
 
 	</select>

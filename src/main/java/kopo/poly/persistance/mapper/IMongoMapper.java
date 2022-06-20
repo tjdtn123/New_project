@@ -14,6 +14,8 @@ public interface IMongoMapper {
 
     List<StarDTO> getStarList(String colNm, String season) throws Exception;
 
+    List<StarDTO> getAdStarList(String colNm) throws Exception;
+
     StarDTO getStarInfo (String colNm ,String star_name) throws Exception;
 
     int InsertMine (String colNm, MyDTO pDTO) throws Exception;

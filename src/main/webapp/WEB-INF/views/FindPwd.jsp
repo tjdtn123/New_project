@@ -1,5 +1,5 @@
-
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%! String id_session;
 
 %>
@@ -10,35 +10,10 @@
 %>
 <%@include file="import/heads.jsp"%>
 
-    <title>The Big Picture - Start Bootstrap Template</title>
+    <title>비밀번호 변경</title>
 
 
-    <style>
-        .weather{
-            color: white;
-        }
-        .CurrIcon, .CurrTemp{
-            display: inline-block;
-            font-size: 3rem;
-            text-align: center;
-        }
-        .CurrIcon{
-            margin-right: 2px;
-        }
-        .City{
-            font-size: 3rem;
-            text-align: center;
-        }
-        .onecard img{
-            float: left;
-        }
-        .right{
-            float: right;
-        }
-        .id_ok {
-            display: block;
-        }
-    </style>
+
     <script type="text/javascript">
         //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ이메일 인증ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
@@ -121,7 +96,7 @@
 
     <script src="https://kit.fontawesome.com/2dc1583151.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-primary" name="f" method="get" action="/PwdChange" target= "ifrPrc" onsubmit="return doSubmit(this);">
+<body>
 <%@include file="import/Navigation.jsp"%>
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
@@ -181,5 +156,4 @@
         </main>
     </div>
 </div>
-</body>
-</html>
+<%@include file="import/footer.jsp"%>
