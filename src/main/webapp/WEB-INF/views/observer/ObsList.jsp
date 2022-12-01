@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ page import="java.util.List" %>
@@ -8,7 +8,7 @@
 <%@ page import="kopo.poly.dto.PageMakeDTO" %>
 
 <%
-    
+
     List<ObsDTO> rList = (List<ObsDTO>) request.getAttribute("rList");
     //게시판 조회 결과 보여주기
     if (rList == null) {
@@ -18,7 +18,7 @@
 
 %>
 <%@include file="../import/heads.jsp"%>
-    <title>회원목록</title>
+    <title>천문대목록</title>
 <link rel="stylesheet" href="../css/UserList.css?after">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,8 +89,9 @@
             </div>
             <div class="board_list_body">
             <%
+                ObsDTO rDTO = null;
                 for (int i = 0; i < rList.size(); i++) {
-                    ObsDTO rDTO = rList.get(i);
+                    rDTO = rList.get(i);
 
                     if (rDTO == null) {
                         rDTO = new ObsDTO();
@@ -99,17 +100,17 @@
                 <div class="item">
                     <div class="c1"><%=CmmUtil.nvl(rDTO.getRegion())%></div>
                         
-                    <div class="c2"><%=CmmUtil.nvl(rDTO.getObs_name()) %> </div>
+                    <div class="c2"><%=CmmUtil.nvl(rDTO.getObs_name())%> </div>
 
                     <div class="c3">
-                        <a href="<%=CmmUtil.nvl(rDTO.getPageurl()) %>">
-                            <%=CmmUtil.nvl(rDTO.getPageurl()) %>
+                        <a onclick="movetoObs(<%=CmmUtil.nvl(rDTO.getPageurl())%>)">
+                            <%=CmmUtil.nvl(rDTO.getPageurl())%>
                         </a>
                     </div>
 
-                    <div class="c4"><%=CmmUtil.nvl(rDTO.getPhone()) %></div>
+                    <div class="c4"><%=CmmUtil.nvl(rDTO.getPhone())%></div>
 
-                    <div class="c5"><%=CmmUtil.nvl(rDTO.getType()) %></div>
+                    <div class="c5"><%=CmmUtil.nvl(rDTO.getType())%></div>
                 </div>
                 <%
                     }
@@ -168,6 +169,10 @@
 
         });
 
+        function movetoObs(url){
+            window.open(`"/`+url+`"`);
+
+        }
     </script>
 </body>
 </html>

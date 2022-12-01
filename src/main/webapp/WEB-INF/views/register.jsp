@@ -1,42 +1,39 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-
+<%@include file="import/heads.jsp"%>
         <title>회원가입</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="/assets/wallpaper.jpg" />
-        <script src="https://code.jquery.com/jquery-latest.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-              integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <style>
-            html	{ overflow: hidden; }
-            body	{ overflow: auto; }
-            body::before {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-image: url("/assets/wallpaper.jpg");
-                background-size: cover;
-                -webkit-filter: blur(5px);
-                -moz-filter: blur(5px);
-                -o-filter: blur(5px);
-                -ms-filter: blur(5px);
-                filter: blur(5px);
-                transform: scale(1.02);
-                z-index: -1;
-                content: "";
-            }
-        </style>
+        <link rel="stylesheet" href="/css/login.css">
+        <link rel="stylesheet" href="/css/nomal.css">
+
         <script src="js/emailApi.js"></script>
         <style>
+            input[type="text"],
+            input[type="password"],
+            input[type="date"],
+            input[type="datetime"],
+            input[type="email"],
+            input[type="number"],
+            input[type="search"],
+            input[type="tel"],
+            input[type="time"],
+            input[type="url"],
+            textarea,
+            select {
+                background: rgba(255,255,255,0.1);
+                border: none;
+                font-size: 16px;
+                height: auto;
+                margin: 0;
+                outline: 0;
+                padding: 15px;
+                width: 100%;
+                background-color: #e8eeef;
+                color: #8a97a0;
+                box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+                margin-bottom: 30px;
+            }
             .id_ok {
 
             }
@@ -49,8 +46,6 @@ pageEncoding="UTF-8"%>
             right {
                 float: right;
             }
-
-
         </style>
 
         <script type="text/javascript">
@@ -82,10 +77,17 @@ pageEncoding="UTF-8"%>
 
             }
 
+            function isId(asValue) {
+                var regExp = /^[a-z]+[a-z0-9]{5,19}$/g;
+
+                return regExp.test(asValue);
+            }
             function isEmail(asValue) {
                 var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
                 return regExp.test(asValue);
             }
+
+
 
             function emailCertification() {
                 let clientEmail = document.getElementById('emailText').value;
@@ -121,7 +123,8 @@ pageEncoding="UTF-8"%>
                         url:'/register/idCheck',
                         type:'post',
                         data:{user_id:user_id},
-                        success:function(cnt){ //컨트롤러에서 넘어온 cnt값을 받는다
+                        success:function(cnt){
+                            //컨트롤러에서 넘어온 cnt값을 받는다
 
                                 if(cnt != 1){ //cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
                                     $('.id_ok').css("color","#033af5");
@@ -138,14 +141,26 @@ pageEncoding="UTF-8"%>
                             alert("에러입니다");
                         }
                     });
+
             };
 
-            function pwdCheck(){
-                var pwd1 = $('#password').val();
-                var pwd2 = $('#')
+            $(function(){
+               $('#password').keyup(function(){
+                    $('#pwd_ok').html('');
+                });
 
-            }
+                $('#pwdCheck').keyup(function(){
 
+                    if($('#password').val() != $('#pwdCheck').val()){
+                        $('#pwd_ok').html('비밀번호 일치하지 않음<br><br>');
+                        $('.pwd_ok').css('color', '#f60607');
+                    } else{
+                        $('#pwd_ok').html('비밀번호 일치함<br><br>');
+                        $('.pwd_ok').css('color', '#033af4');
+                    }
+
+                });
+            });
            //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ우편번호ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
                
             function doSubmit(f){
@@ -155,11 +170,22 @@ pageEncoding="UTF-8"%>
                     return false;
                 }
 
+                if(!isId(f.user_id.value)){
+                    alert("아이디는 소문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.");
+                    f.user_id.focus();
+                    return false;
+
+                }
+
+
+
                 if(f.password.value == ""){
                     alert("비밀번호를 입력하시기 바랍니다.");
                     f.password.focus();
                     return false;
                 }
+
+
                 if(f.emailText.value == ""){
                     alert("이메일을 입력하시기 바랍니다.");
                     f.emailText.focus();
@@ -185,7 +211,7 @@ pageEncoding="UTF-8"%>
         </script>
     </head>
 
-    <body class="bg-primary" >
+    <body>
     <%@include file="import/Navigation.jsp"%>
     <section>
         <div class="container px-4 px-lg-5">
@@ -198,93 +224,72 @@ pageEncoding="UTF-8"%>
             </div>
         </div>
     </section>
-    <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-7">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
-                                    <div class="card-body">
-                                        <form name="f" method="post" action="/Userinfoinsert" target= "ifrPrc" onsubmit="return doSubmit(this);" >
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="user_id" name="user_id" placeholder="아이디" type="text" required oninput="idCheck()" />
 
+    <div class="container" >
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h1 class="text-center font-weight-light my-4"><strong>회원가입</strong></h1></div>
+                    <div class="card-body" style="padding: 30px">
+                        <form name="f" method="post" action="/Userinfoinsert" target= "ifrPrc" onsubmit="return doSubmit(this);" >
+                            <div class="row">
+                                <label for="user_id">아이디</label>
+                                <div style="display: flex">
+                                    <input class="text-field" style="width: 60%; height: 41px;" id="user_id" name="user_id" type="text" required oninput="idCheck()" />
+                                    <span class="id_ok" style="margin-left: 10px"></span>
+                                </div>
 
-                                                    </div>
-                                                    <span class="id_ok form-floating mb-3 mb-md-0"></span>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="password" name="password" type="password"  />
-                                                        <label for="password">비밀번호</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="user_name" name="user_name" type="text"  />
-                                                        <label for="user_name">이름</label>
+                                    <label for="password" style="width: 40%;">비밀번호</label>
+                                    <label for="pwdCheck" style="width: 40%;">비밀번호 확인</label>
+                                    <div style=" display:flex">
+                                        <input class="text-field" style="width: 40%; height: 41px;" id="password" name="password" type="password"  />
+                                        <input class="text-field" style="width: 40%; height: 41px; margin-left: 10px;" id="pwdCheck" name="pwdCheck" type="password"  required oninput="pwdCheck()"/>
 
-                                                    </div>
-                                                </div>
-
-                                                <div class = "col-md-10">
-                                                    <div class="form-floating mb-3">
-                                                        <input class="form-control" id="emailText" name="emailText" type="email"  />
-                                                        <label for="emailText">이메일</label>
-
-                                                    </div>
-                                                </div>
-                                                <div class = "col-md-10">
-                                                    <div class="form-floating mb-3">
-                                                        <button type="button" name="emailCheck" id="emailCheck" onclick="emailSend()">인증메일 전송</button>
-
-                                                    </div>
-                                                </div>
-                                                <div class = "col-md-10">
-                                                    <div class="form-floating mb-3">
-                                                           <input class="form-control" id="certificationNumber" name="certificationNumber" type="text"  />
-                                                    </div>
-                                                </div>
-                                                <div class = "col-md-10">
-                                                    <div class="form-floating mb-3">
-                                                        <button type="button" name="certificationBtn" id="certificationBtn" onclick="emailCertification()">인증 하기</button>
-                                                        <input type="hidden" name="certificationYN" id="certificationYN" value="false"/>
-                                                     </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input type="text" name="sample6_postcode" id="sample6_postcode" placeholder="우편번호">
-                                                        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-                                                        <input type="text" id="addr1" name="addr1" placeholder="주소"><br>
-                                                        <input type="text" name="sample6_detailAddress" id="sample6_detailAddress" placeholder="상세주소">
-                                                        <input type="text" id="addr2" name="addr2" placeholder="참고항목">
-                                                    </div>
-                                                </div>
-                                            <div class="mt-4 mb-0">
-                                                <div class="d-grid">
-                                                    <input type="submit" value="회원가입"/>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </form>
                                     </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="LoginPage.jsp">Have an account? Go to login</a></div>
+                                <span class="pwd_ok" id="pwd_ok" style="margin-left: 10px"></span>
+
+
+                                <label for="user_name">이름</label>
+                                <div class="col-md-6">
+                                    <input class="text-field" style="height: 41px;" id="user_name" name="user_name" type="text"  />
+                                </div>
+
+                                <label for="emailText">이메일</label>
+                                <div style="display:flex;">
+                                    <input class="text-field"  style="width: 60%; height: 41px;" id="emailText"  name="emailText" type="email"  />
+                                    <button type="button" class="submit-btn-100" style="margin-left: 10px; height: 41px;" name="emailCheck" id="emailCheck" onclick="emailSend()">인증메일 전송</button>
+                                </div>
+
+
+                                <div style="display: flex">
+                                    <input class="text-field" style="width:60%; height:41px;" id="certificationNumber" name="certificationNumber" type="text"  />
+                                    <button type="button" class="submit-btn-100" style="margin-left: 10px; height: 41px;" name="certificationBtn" id="certificationBtn" onclick="emailCertification()">인증 하기</button>
+                                    <input type="hidden" style="height: 41px;" name="certificationYN" id="certificationYN" value="false"/>
+                                </div>
+
+
+                                    <input type="text" style="height: 41px; width:30%;" name="sample6_postcode" id="sample6_postcode" placeholder="우편번호">
+                                    <input type="button" class="submit-btn-100" style="margin-left: 10px; height: 41px;" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+                                    <input type="text" style="height: 41px; width:60%;" id="addr1" name="addr1" placeholder="주소">
+                                    <input type="text" style="height: 41px; width:60%;" name="sample6_detailAddress" id="sample6_detailAddress" placeholder="상세주소">
+                                    <input type="text" style="height: 41px; width:60%;" id="addr2" name="addr2" placeholder="참고항목">
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid">
+                                        <input type="submit" class="submit-btn" value="회원가입"/>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                </main>
+                    <div class="card-footer text-center py-3">
+                        <div class="small"><a href="/LoginPage">계정이 있으신가요? 로그인</a></div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+
     <iframe name="ifrPrc" style="display:none"></iframe>
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-
-    </body>
-</html>
+<%@include file="import/footer.jsp"%>

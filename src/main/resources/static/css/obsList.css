@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.obs_list_warp {
+    padding: 30px;
+}
+
+.obs_list_head,
+.obs_list_body .item {
+    padding: 10px 0;
+    font-size: 0;
+
+}
+
+.obs_list_head {
+    border-top: 2px solid green;
+    border-bottom: 1px solid #ccc;
+}
+
+.obs_list_body .item {
+    border-bottom: 1px solid #ccc;
+}
+
+.obs_list_head > div,
+.obs_list_body .item > div {
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+
+}
+
+.obs_list_head > div {
+    font-weight: 600;
+}
+
+.obs_list .c1 {
+    width: 15%;
+
+}
+
+.obs_list .c2 {
+    width: 15%;
+}
+
+.obs_list_body div.c1 {
+    text-align: center;
+}
+
+.obs_list_body div.c1 a:hover {
+    text-decoration: underline;
+
+}
+
+
+.obs_list .c3 {
+    width: 30%;
+}
+
+.obs_list_body div.c3 > a {
+   color: #f69c8e;
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+.obs_list_body div.c3 a:hover {
+    color: #f5715e;
+
+}
+
+.obs_list .c4 {
+    width: 20%;
+}
+
+.obs_list .c5 {
+    width: 20%;
+}
+
+.backboard{
+    background-color: #394264;
+    border-radius: 5px;
+    width: 90%;
+    height: 500px;
+    overflow: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+}
+
+.backboard-textcolor{
+    color: white;
+}
+
+.backboard-header{
+    background-color: #394264;
+    border-radius: 5px;
+    width: 90%;
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+.list_margin{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+

@@ -12,8 +12,10 @@
 
     }
 %>
-    <title>마이페이지</title>
-<link href="../css/mystar.css" rel="stylesheet">
+    <title>내 별자리 조회</title>
+
+<link rel="stylesheet" href="../css/board.css">
+<link rel="stylesheet" href="../css/nomal.css">
 </head>
 <script>
     function domove(starNm){
@@ -23,8 +25,9 @@
 </script>
 <body>
 <%@include file="../import/Navigation.jsp"%>
-     <section>
-        <ul class="cards">
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <%
                 for (int i = 0; i < rList.size(); i++) {
                     StarDTO rDTO = rList.get(i);
@@ -33,21 +36,30 @@
                         rDTO = new StarDTO();
                     }
             %>
-            <li class="cards__item">
-                <div class="card">
-                    <div class="card__image" style="background-image: url('<%=CmmUtil.nvl(rDTO.getPicture())%>');"></div>
-                    <div class="card__content">
-                        <div class="card__title"><%=CmmUtil.nvl(rDTO.getStar_name())%></div>
-                        <button class="btn btn--block card__btn" onclick="domove('<%=CmmUtil.nvl(rDTO.getStar_name())%>')">자세히 보기</button>
+            <div class="col mb-5 ">
+                <div class="card h-100 p-1">
+                    <!-- Product image-->
+                    <img class="card-img-top" style="width: auto; height:244px;" src="<%=CmmUtil.nvl(rDTO.getPicture())%>" alt="..." />
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder"><%=CmmUtil.nvl(rDTO.getStar_name())%></h5>
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><button type="button" style="margin: auto;" class="btn btn__3" onclick="domove('<%=CmmUtil.nvl(rDTO.getStar_name())%>')">자세히 보기</button></div>
                     </div>
                 </div>
-            </li>
+            </div>
             <%
                 }
             %>
-        </ul>
-     </section>
+        </div>
+    </div>
+</section>
 
 
-</body>
+<%@include file="../import/footer.jsp"%>
 

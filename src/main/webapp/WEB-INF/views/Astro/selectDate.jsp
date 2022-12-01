@@ -69,8 +69,8 @@
                             <option value="12">12월</option>
                         </select>
                         </div>
-                        <div class="card-footer text-center py-3">
-                            <button type="submit" class="btn btn-primary">검색</button>
+                        <div class="class=col-auto my-1" style="margin-left: 88%;">
+                            <button type="submit" class="btn btn-secondary">검색</button>
                         </div>
                     </form>
                 </div>

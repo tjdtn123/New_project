@@ -29,15 +29,15 @@
 
 %>
 <%@include file="../import/heads.jsp"%>
-    
+
     
     <title>게시판 글보기</title>
-    
-    
+
+<link rel="stylesheet" href="../css/login.css">
+<link rel="stylesheet" href="../css/nomal.css">
     <script type="text/javascript">
         var bno = '<%=CmmUtil.nvl(rDTO.getBoard_seq())%>'; //게시글 번호
-        console.log(bno);
-        //수정하기
+         //수정하기
         function doEdit() {
             if ("<%=edit%>" == 2) {
                 location.href = "/board/BoardEditInfo?nSeq=<%=CmmUtil.nvl(rDTO.getBoard_seq())%>";
@@ -79,73 +79,75 @@
 </head>
 <body>
 <%@include file="../import/Navigation.jsp"%>
-<section>
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5">
-            <div class="col-lg-6">
-                <br>
-                <br>
-                <br>
+
+    <div class="container" >
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-3 rounded-lg mt-5">
+                    <div class="card-header">
+                        <div style="display: flex; height: auto;" >
+                            <div class="info-border w-25"><h5 class="my-2 text-center"><strong>제목</strong></h5></div>
+                            <div class="text-field" style="font-size:15px; margin-left: 10px; width: 60%; padding-top: 5px; padding-left: 3%;"><%=CmmUtil.nvl(rDTO.getTitle())%></div>
+                        </div>
+                        <div class="mt-2" style="display: flex; height: auto" >
+                            <div class="info-border" style="width: 20%;"><h5 class="my-2 text-center"><strong>작성일</strong></h5></div>
+                            <div class="info-border" style="margin-left: 10px; width: 25%; padding-top: 5px; padding-left: 3%;"><%=CmmUtil.nvl(rDTO.getReg_dt())%></div>
+
+                            <div class="info-border" style="width: 20%; margin-left: 100px; "><h5 class="my-2 text-center"><strong>조회수</strong></h5></div>
+                            <div class="info-border" style="margin-left: 10px; width: 15%; padding-top: 5px; padding-left: 3%;"><%=CmmUtil.nvl(rDTO.getRead_cnt())%></div>
+
+                        </div>
+                    </div>
+
+                    <div class="card-body" style="padding: 30px">
+
+
+                        <div>
+                            <div colspan="4" height="300px" valign="top">
+                                <%=CmmUtil.nvl(rDTO.getContents()).replaceAll("\r\n", "<br/>") %>
+                            </div>
+                        </div>
+                    <hr>
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-lg-7 text-end">
+                                <button type="button" class="submit-btn-100 m-2" onclick="doEdit()";>[수정]</button>
+                                <button type="button" class="submit-btn-100 m-2" onclick="doDelete()";>[삭제]</button>
+                                <button type="button" class="submit-btn-100 m-2" onclick="doList()";>[목록]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</section>
-<div>
 
-    <div>
-        <div>제목</div>
-        <div colspan="3"><%=CmmUtil.nvl(rDTO.getTitle())%>
-        </div>
-    </div>
-    <div>
-        <div>공지글 여부</div>
-        <div>예<label>
-            <input type="radio" name="noticeYn" value="1"
-                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "1") %>/>
-        </label>
-            아니오<input type="radio" name="noticeYn" value="2"
-                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "2") %>/>
-        </div>
-    </div>
-    <div>
-        <div align="center">작성일</div>
-        <div><%=CmmUtil.nvl(rDTO.getReg_dt())%>
-        </div>
-        <div align="center">조회수</div>
-        <div><%=CmmUtil.nvl(rDTO.getRead_cnt())%>
-        </div>
-    </div>
-    <div>
-        <div colspan="4" height="300px" valign="top">
-            <%=CmmUtil.nvl(rDTO.getContents()).replaceAll("\r\n", "<br/>") %>
-        </div>
-    </div>
-    <div>
-        <div align="center" colspan="4">
-            <a href="javascript:doEdit();">[수정]</a>
-            <a href="javascript:doDelete();">[삭제]</a>
-            <a href="javascript:doList();">[목록]</a>
-        </div>
-    </div>
-</div>
+
 <!--  댓글  -->
-<div class="container">
-    <label for="contents">comment</label>
-    <form name="commentInsertForm">
-        <div class="input-group">
-            <input type="hidden" name="board_seq" value="<%=CmmUtil.nvl(rDTO.getBoard_seq())%>"/>
-            <input type="text" class="form-control" id="contents" name="contents" placeholder="내용을 입력하세요.">
-            <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
-               </span>
+<hr/>
+<div class="container" >
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"> <label for="contents" style="color: #cccccc"><h3><strong>댓글</strong></h3></label></div>
+                <div class="card-body" style="padding: 30px">
+
+                    <form name="commentInsertForm">
+                        <div class="input-group">
+                            <input type="hidden" name="board_seq" value="<%=CmmUtil.nvl(rDTO.getBoard_seq())%>"/>
+                            <input type="text" class="form-control" id="contents" name="contents" placeholder="내용을 입력하세요.">
+                            <span class="input-group-btn">
+                                    <button class="btn btn-primary " style=" margin-left: 5px" type="button" name="commentInsertBtn">등록</button>
+                               </span>
+                        </div>
+                    </form>
+                    <div class="container">
+                        <div class="commentList"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </form>
+    </div>
 </div>
 
-<div class="container">
-    <div class="commentList"></div>
-</div>
-</div>
 <%@ include file="../import/Comments.jsp" %>
-</body>
-</html>
+<%@include file="../import/footer.jsp"%>

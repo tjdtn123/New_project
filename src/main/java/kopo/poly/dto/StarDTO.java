@@ -7,10 +7,11 @@ import lombok.Setter;
 @Setter
 public class StarDTO {
     String star_name;
-    String sc_name;
     String position;
-    String season;
     String star_cnt;
+    String size;
+    String season;
     String picture;
+
 
 }

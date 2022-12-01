@@ -35,30 +35,41 @@
 <div id="stars"></div>
 <div id="stars2"></div>
 <div id="stars3"></div>
+<br>
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header py-3"><h2 class="text-center"><strong>별자리 조회</strong></h2></div>
+                <div class="card-body">
+                <form method="get" action="/Star/StarList">
+                    <div class="form-row align-items-center">
+                        <div class="col-auto my-1 text-center">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">지역</label>
+                            <select class="form-select" id="inlineFormCustomSelect" name="season">
+                                <option selected>계절</option>
+                                <option value="봄철 밤하늘 별자리">봄</option>
+                                <option value="여름철 밤하늘 별자리">여름</option>
+                                <option value="가을철 밤하늘 별자리">가을</option>
+                                <option value="겨울철 밤하늘 별자리">겨울</option>
 
-<form method="get" action="/Star/StarList">
-    <div class="form-row align-items-center">
-        <div class="col-auto my-1">
-            <label class="mr-sm-2" for="inlineFormCustomSelect">지역</label>
-            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="season">
-                <option selected>계절</option>
-                <option value="봄철 밤하늘 별자리">봄</option>
-                <option value="여름철 밤하늘 별자리">여름</option>
-                <option value="가을철 밤하늘 별자리">가을</option>
-                <option value="겨울철 밤하늘 별자리">겨울</option>
-
-            </select>
-        </div>
-        <div class="col-auto my-1">
-            <button type="submit" class="btn btn-primary">검색</button>
+                            </select>
+                        </div>
+                        <div class="col-auto my-1"  style="margin-left: 88%">
+                            <button class="btn btn-secondary"  type="submit">검색</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
         </div>
     </div>
-</form>
+</div>
 
 <script>
 
 
 </script>
 
-</body>
-</html>
+<%@include file="../import/footer.jsp"%>

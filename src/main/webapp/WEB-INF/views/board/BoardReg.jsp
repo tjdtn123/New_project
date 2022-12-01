@@ -7,12 +7,15 @@
     System.out.println(id_session);
 %>
 <%@include file="../import/heads.jsp"%>
+
     <title>글쓰기</title>
 
+    <link rel="stylesheet" href="../css/nomal.css">
+    <link rel="stylesheet" href="../css/login.css">
     <script src="/js/MyUploadAdpater.js"></script>
     <!-- CKEditor 5 CDN 적용-->
     <script src="/ckeditor/build/ckeditor.js"></script>
-  
+
 
     <script type="text/javascript">
 
@@ -81,39 +84,49 @@
                 return new MyUploadAdapter( loader );
             }
         }
+
     </script>
 </head>
-<body class="bg-primary">
+<body>
 <%@include file="../import/Navigation.jsp"%>
 
 <br>
 <br>
 <br>
-<div class="container">
-
-    <h3>글 쓰기</h3>
-        <form name="f" method="post" action="/board/BoardInsert" target="ifrPrc" onsubmit="return doSubmit(this);">
-            <div class="form-check">
-                <label for="title">제목</label>
-                <input type="text" id="title" name="title" maxlength="100" style="width: 450px" />
-            </div>
-            <div class="form-check">
-                <label for="noticeYn">공지글 여부</label>
-                <div>
-                    예<input type="radio" id="noticeYn" name="noticeYn" value="1" />
-                    아니오<input type="radio" name="noticeYn" value="2" />
+    <div class="container" >
+        <div class="row justify-content-center">
+            <div class="col-lg-9">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h1 class="text-center font-weight-light my-4" style="color: black"><strong>글쓰기</strong></h1></div>
+                    <div class="card-body" style="padding: 30px">
+                        <form name="f" method="post" action="/board/BoardInsert" target="ifrPrc" onsubmit="return doSubmit(this);">
+                            <div class="form-check">
+                                <label for="title">제목</label>
+                                <input type="text" class="text-field" id="title" name="title" maxlength="100" style="width: 450px;" />
+                            </div>
+                            <% if (id_session.equals("admin")) {%>
+                            <div class="form-check">
+                                <label for="noticeYn">공지글 여부</label>
+                                <div>
+                                    예<input type="radio" id="noticeYn" name="noticeYn" value="1" />
+                                    아니오<input type="radio" name="noticeYn" value="2" />
+                                </div>
+                            </div>
+                            <% } %>
+                            <div class="form-check">
+                                <label for="contents">내용</label>
+                                  <textarea name="contents" id="contents" class="form-control"></textarea>
+                            </div>
+                            <div class="text-end">
+                                <input type="submit" class="submit-btn-100" style="margin-right: 5px;" value="등록" />
+                                <input type="reset" class="submit-btn-100" value="다시 작성" />
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="form-check">
-                <label for="contents">내용</label>
-                  <textarea name="contents" id="contents" class="form-control"></textarea>
-            </div>
-            <div>
-                <input type="submit" class="btn" value="등록" />
-                <input type="reset" class="btn" value="다시 작성" />
-            </div>
-        </form>
-</div>
+        </div>
+    </div>
 <iframe name="ifrPrc" style="display:none"></iframe>
 
 <!-- 글쓰기 에디터 실행-->
@@ -131,6 +144,4 @@
 
 </script>
 
-
-</body>
-</html>
+<%@include file="../import/footer.jsp"%>

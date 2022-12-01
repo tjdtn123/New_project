@@ -11,30 +11,30 @@
 
 	</select>
 
-<!--
 	<insert id="insertCalendar" parameterType="CalendarDTO">
 		insert into CALENDAR (
-			USER_ID, CALENDAR_TITLE,
-		    CALENDAR_MEMO, CALENDAR_START, CALENDAR_END
+			USER_ID, TITLE,
+			MEMO, START, END
 
 		) values (
-		    #{user_id},#{calendar_title},#{calendar_memo},#{calender_start},#{calendar_end}
-		)
+					 #{user_id},#{title},#{memo},#{start},#{end}
+				 )
 
 	</insert>
 
-	<update id="updateCalender" parameterType="CalendarDTO">
-		UPDATE CALENDAR SET
-			CALENDAR_TITLE = #{calendar_title},CALENDAR_MEMO = #{calendar_memo}, CALENDAR_START = #{calendar_start},
-			CALENDAR_END = #{calendar_end}
-		WHERE
-			USER_ID = #{user_id}
+	<update id="updateCalendar" parameterType="CalendarDTO">
+		UPDATE CALENDAR
+		SET
+		    TITLE = #{title}, MEMO = #{memo}, START = #{start}, END = #{end}
+		WHERE CALENDAR_NO = #{calendar_No} AND USER_ID = #{user_id}
+
+
 	</update>
 
 	<delete id="deleteCalendar" parameterType="CalendarDTO">
 		DELETE  FROM CALENDAR
-		WHERE USER_ID = #{user_id}
+		WHERE TITLE = #{title} AND MEMO = #{memo} AND USER_ID = #{user_id}
 
 	</delete>
--->
+
 </mapper>

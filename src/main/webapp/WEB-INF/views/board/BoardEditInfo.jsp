@@ -21,10 +21,13 @@
 	}
 %>
 <%@include file="../import/heads.jsp"%>
+
 	<title>게시판 글쓰기</title>
 	<script src="/js/MyUploadAdpater.js"></script>
 	<!-- CKEditor 5 CDN 적용-->
 	<script src="/ckeditor/build/ckeditor.js"></script>
+<link rel="stylesheet" href="../css/login.css">
+<link rel="stylesheet" href="../css/nomal.css">
 	
 	<style>
 		right{
@@ -127,39 +130,41 @@ function MyCustomUploadAdapterPlugin( editor ) {
 		</div>
 	</div>
 </section>
-<h2>글 수정!</h2>
-<form name="f" method="post" action="/board/BoardUpdate" onsubmit="return doSubmit(this);">
-<input type="hidden" name="nSeq" value="<%=CmmUtil.nvl(request.getParameter("nSeq")) %>" />
-	<div border="1">
-		<div>
-			<div align="center">제목</div>
-			<div>
-			<input type="text" name="title" maxlength="100" 
-				   value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" style="width: 450px"/>
+<div class="container" >
+	<div class="row justify-content-center">
+		<div class="col-lg-9">
+			<div class="card shadow-lg border-0 rounded-lg mt-5">
+				<div class="card-header"><h1 class="text-center font-weight-light my-4"><strong>글수정</strong></h1></div>
+				<div class="card-body" style="padding: 30px">
+					<form name="f" method="post" action="/board/BoardUpdate" target="ifrPrc" onsubmit="return doSubmit(this);">
+						<input type="hidden" name="nSeq" id="nSeq" value="<%=CmmUtil.nvl(rDTO.getBoard_seq())%>"/>
+						<div class="form-check">
+							<label for="title">제목</label>
+							<input type="text" class="text-field" id="title" name="title" maxlength="100" style="width: 450px" value="<%=CmmUtil.nvl(rDTO.getTitle())%>"  />
+						</div>
+						<% if (id_session.equals("admin")) {%>
+						<div class="form-check">
+							<label for="noticeYn">공지글 여부</label>
+							<div>
+								예<input type="radio" id="noticeYn" name="noticeYn" value="1" />
+								아니오<input type="radio" name="noticeYn" value="2" />
+							</div>
+						</div>
+						<% } %>
+						<div class="form-check">
+							<label for="contents">내용</label>
+							<textarea name="contents" id="contents" class="form-control"><%=CmmUtil.nvl(rDTO.getContents())%></textarea>
+						</div>
+						<div class="text-end">
+							<input type="submit" class="submit-btn-100" style="margin-right: 5px;" value="수정" />
+							<input type="reset" class="submit-btn-100" value="다시 작성" />
+						</div>
+					</form>
+				</div>
 			</div>
-		</div>
-		<div>
-			<div align="center">공지글 여부</div>
-			<div>
-				예<input type="radio" name="noticeYn" value="1"
-						<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "1") %>	/>
-			        아니오<input type="radio" name="noticeYn" value="2" 
-			        	<%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "2") %>	/>
-			</div>
-		</div>
-		<div>
-			<div colspan="2">
-				<textarea id="contents" name="contents" style="width: 550px; height: 400px"><%=CmmUtil.nvl(rDTO.getContents())%></textarea>
-			</div>
-		</div>
-	<div>
-		<div align="center" colspan="2">
-			<input type="submit" value="수정" />
-			<input type="reset" value="다시 작성" />
 		</div>
 	</div>
-	</div>
-</form>
+</div>
 <script>
 	ClassicEditor
 			.create( document.querySelector('#contents' ),{
@@ -173,5 +178,4 @@ function MyCustomUploadAdapterPlugin( editor ) {
 			})
 
 </script>
-</body>
-</html>
+<%@include file="../import/footer.jsp"%>

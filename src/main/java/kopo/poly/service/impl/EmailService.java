@@ -56,6 +56,7 @@ public class EmailService {
     public boolean emailCertification(HttpSession session, String userEmail, int inputCode){
         try {
             int generationCode = (int) session.getAttribute(userEmail);
+            log.info(String.valueOf(generationCode));
 
             if(generationCode == inputCode){
                 return true;
@@ -67,4 +68,3 @@ public class EmailService {
         }
     }
 }
-

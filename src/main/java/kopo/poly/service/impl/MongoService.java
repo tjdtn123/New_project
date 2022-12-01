@@ -1,5 +1,6 @@
 package kopo.poly.service.impl;
 
+import kopo.poly.Criteria.Criteria;
 import kopo.poly.dto.MyDTO;
 import kopo.poly.dto.ObsDTO;
 import kopo.poly.dto.StarDTO;
@@ -145,7 +146,7 @@ public class MongoService implements IMongoService {
     }
 
     @Override
-    public List<StarDTO> getAdStarList() throws Exception {
+    public List<StarDTO> getAdStarList(Criteria cri) throws Exception {
 
         log.info(this.getClass().getName() + ".getAdStarList Start!");
 
@@ -154,7 +155,7 @@ public class MongoService implements IMongoService {
 
         List<StarDTO> rList = null;
 
-        rList = mongoMapper.getAdStarList(colNm);
+        rList = mongoMapper.getAdStarList(colNm,cri);
 
         if (rList == null){
             rList = new LinkedList<>();
@@ -165,11 +166,32 @@ public class MongoService implements IMongoService {
         return rList;
     }
 
+    @Override
+    public List<MyDTO> getMyStarList(String id) throws Exception {
+
+        log.info(this.getClass().getName() + ".getmyStarList Start!");
+
+        // MongoDB에 저장된 컬렉션 이름
+        String colNm = "MyStar";
+
+        List<MyDTO> rList = null;
+
+        rList = mongoMapper.getMyStarList(colNm,id);
+
+        if (rList == null){
+            rList = new LinkedList<>();
+        }
+
+        log.info(this.getClass().getName() + ".getmyStarList End!");
+
+        return rList;
+    }
+
 
     @Override
     public StarDTO getStarInfo(String star_name) throws Exception {
 
-        log.info(this.getClass().getName() + ".getStarList Start!");
+        log.info(this.getClass().getName() + ".getStarInfo Start!");
 
         // MongoDB에 저장된 컬렉션 이름
         String colNm = "STARS_02";
@@ -182,11 +204,49 @@ public class MongoService implements IMongoService {
             rDTO = new StarDTO();
         }
 
-        log.info(this.getClass().getName() + ".getStarList End!");
+        log.info(this.getClass().getName() + ".getStarInfo End!");
 
         return rDTO;
     }
 
+    @Override
+    public MyDTO getMyStarInfo(String star_name) throws Exception {
+
+        log.info(this.getClass().getName() + ".getMyStarInfo Start!");
+
+        // MongoDB에 저장된 컬렉션 이름
+        String colNm = "MyStar";
+
+        MyDTO rDTO = null;
+
+        rDTO = mongoMapper.getMyStarInfo(colNm,star_name);
+
+        if (rDTO == null){
+            rDTO = new MyDTO();
+        }
+
+        log.info(this.getClass().getName() + ".getMyStarInfo End!");
+
+        return rDTO;
+    }
+
+
+    @Override
+    public int updateAdStar(StarDTO pDTO) throws Exception{
+        log.info(this.getClass().getName() + ".updateAdStar Start!");
+
+        int res =0;
+        String colNm = "STARS_02";
+        mongoMapper.deleteAdStar(colNm, pDTO);
+
+        mongoMapper.InsertStar(colNm, pDTO);
+        res=1;
+
+        log.info(this.getClass().getName() + ".updateAdStar Start!");
+
+        return res;
+
+    }
     @Override
     public int InsertMine(MyDTO pDTO) throws  Exception{
         log.info(this.getClass().getName() + ".InsertMine Start!");
@@ -197,6 +257,60 @@ public class MongoService implements IMongoService {
         log.info(this.getClass().getName() + ".InsertMine End!");
         return res;
 
+    }
+
+    @Override
+    public int InsertStar(StarDTO pDTO) throws  Exception{
+        log.info(this.getClass().getName() + ".InsertStar Start!");
+        int res =0;
+        String colNm = "STARS_02";
+        res = mongoMapper.InsertStar(colNm, pDTO);
+
+        log.info(this.getClass().getName() + ".InsertStar End!");
+        return res;
+
+    }
+
+    @Override
+    public int deleteMyStar(MyDTO pDTO) throws  Exception{
+
+        log.info(this.getClass().getName() + ".deleteStar Start!");
+
+        int res = 0;
+
+        String colNm = "MyStar";
+
+        res = mongoMapper.deleteMyStar(colNm, pDTO);
+
+        log.info(this.getClass().getName() + ".deleteStar End!");
+
+        return res;
+    }
+
+    @Override
+    public int deleteAdStar(StarDTO pDTO) throws  Exception{
+
+        log.info(this.getClass().getName() + ".deleteAdStar Start!");
+
+        int res = 0;
+
+        String colNm = "STARS_02";
+
+        res = mongoMapper.deleteAdStar(colNm, pDTO);
+
+        log.info(this.getClass().getName() + ".deleteAdStar End!");
+
+        return res;
+    }
+
+    @Override
+    public int countStar()throws Exception{
+        log.info(this.getClass().getName() + ".countStar Start!");
+
+        String colNm = "STARS_02";
+
+        log.info(this.getClass().getName() + ".countStar End!");
+        return mongoMapper.countStar(colNm);
     }
 
 }

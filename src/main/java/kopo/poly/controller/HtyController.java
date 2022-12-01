@@ -100,11 +100,13 @@ public class HtyController {
 
         return "/Star/StarInfo";
     }
+    @ResponseBody
     @PostMapping(value="/Star/insertmine")
-    public int InsertMine(HttpServletRequest request, HttpSession session) throws Exception{
+    public String InsertMine(HttpServletRequest request,ModelMap model, HttpSession session) throws Exception{
         log.info(this.getClass().getName() + ".InsertMine Start!");
+        String msg;
 
-        int res = 0;
+
 
         String user_id = CmmUtil.nvl((String)session.getAttribute("user_id"));
         String star_name = CmmUtil.nvl(request.getParameter("star_name"));
@@ -122,15 +124,22 @@ public class HtyController {
         pDTO.setStar_cnt(star_cnt);
         pDTO.setPicture(picture);
 
-        if (mongoService.InsertMine(pDTO) != 1) {
 
+        int res = mongoService.InsertMine(pDTO);
 
-        return res;
+        if (res == 1) {
+            msg = "success";
+            model.addAttribute("msg", msg);
+            log.info(this.getClass().getName() + ".InsertMine End!");
+            return msg;
+
         }
         else {
-            res = 1;
+
+            msg = "fail";
+
             log.info(this.getClass().getName() + ".InsertMine End!");
-            return res;
+            return msg;
         }
     }
 
@@ -167,7 +176,6 @@ public class HtyController {
             st.append(line);
         }
         String avx = st.toString();
-
         JSONObject xmlJSONObj = XML.toJSONObject(st.toString());
         String jsonPrettyPrintString = xmlJSONObj.toString(INDENT_FACTOR);
 
@@ -192,4 +200,6 @@ public class HtyController {
     return "Astro/test";
 
     }
+
+
 }

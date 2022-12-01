@@ -2,21 +2,24 @@
          pageEncoding="UTF-8"%>
 <%@include file="../import/heads.jsp"%>
     <title>관리자</title>
-    <link rel="stylesheet" href="../css/button.css">
-    <script src="../js/scripts.js"></script>
+
+<link rel="stylesheet" href="../css/board.css">
+<link rel="stylesheet" href="../css/nomal.css">
+<link rel="stylesheet" href="../css/login.css">
 
 </head>
 <body>
 <%@include file="../import/Navigation.jsp"%>
-<div class="centerer">
-    <h1>관리자 페이지</h1>
 
-    <div class="wrap">
-        <a class="btn-0" href="/admin/AdStarList">별자리 관리</a>
-        <a class="btn-1" href="/admin/UserList">회원 관리</a>
-        <a class="btn-2" href="/Logout">로그아웃</a>
+<h1 class="text-center mt-5">관리자 페이지</h1>
+
+<div class="container text-center col-md-3">
+    <div >
+        <button class="baton-0 mg5 mt-5"onclick=location.href="/admin/AdStarList">별자리관리</button>
+        <button class="baton-0 mg5 mt-5"onclick=location.href="/admin/UserList">회원 관리</button>
+        <button class="baton-0 mg5 mt-5"onclick=location.href="/Logout">로그아웃</button>
+
     </div>
-
 </div>
-</body>
 
+<%@include file="../import/footer.jsp"%>

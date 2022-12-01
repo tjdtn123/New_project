@@ -40,16 +40,21 @@ public class UserInfoService implements IUserInfoService {
         uDTO.setPassword(encodePassword);
 
         userinfoMapper.InsertUserInfo(uDTO);
-
+        log.info(this.getClass().getName() + ".InsertUserInfo start!");
     }
     @Transactional
     @Override
     public void ChangePwd(UserInfoDTO uDTO) throws Exception {
 
-        log.info(this.getClass().getName() + ".InsertUserInfo start!");
+        log.info(this.getClass().getName() + ".ChangePwd start!");
+
+        String password = uDTO.getPassword();
+        String encodePassword = passwordEncoder.encode(password);
+        uDTO.setPassword(encodePassword);
 
         userinfoMapper.ChangePwd(uDTO);
 
+        log.info(this.getClass().getName() + ".ChangePwd end!");
     }
 
     @Transactional

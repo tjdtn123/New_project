@@ -1,17 +1,22 @@
 package kopo.poly.controller;
 
+import kopo.poly.dto.MyDTO;
 import kopo.poly.dto.UserInfoDTO;
+import kopo.poly.service.IMongoService;
 import kopo.poly.service.IUserInfoService;
 import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -21,12 +26,36 @@ public class MyPageController {
     @Resource(name = "UserInfoService")
     private IUserInfoService userInfoService;
 
+    @Resource(name ="MongoService")
+    private IMongoService mongoService;
+
 
     @GetMapping(value = "/MyPage")
     private String MyPage() {
         return "/mypage/Mypage";
     }
 
+    @GetMapping(value = "/EditMyinfo")
+    private String EditMyinfo(ModelMap model, HttpSession session) throws Exception {
+
+        log.info(this.getClass().getName() + ".EditMyinfo Start!");
+
+        String user_id = CmmUtil.nvl((String) session.getAttribute("user_id"));
+
+        log.info(user_id);
+        UserInfoDTO pDTO = new UserInfoDTO();
+        pDTO.setUser_id(user_id);
+
+        UserInfoDTO rDTO = userInfoService.SelectUser(pDTO);
+
+        if (rDTO == null) {
+            rDTO = new UserInfoDTO();
+        }
+
+        model.addAttribute("EditMyinfo", rDTO);
+
+        return "/mypage/EditMyinfo";
+    }
     @GetMapping(value = "/Myinfo")
     private String Myinfo(ModelMap model, HttpSession session) throws Exception {
 
@@ -48,27 +77,10 @@ public class MyPageController {
 
         return "/mypage/Myinfo";
     }
-    @GetMapping(value = "/EditMyinfo")
-    private String EditMyinfo(ModelMap model, HttpSession session) throws Exception {
-
-        log.info(this.getClass().getName() + ".EditMyinfo Start!");
-
-        String user_id = CmmUtil.nvl((String) session.getAttribute("user_id"));
-
-        log.info("user_id : " + user_id);
-
-        UserInfoDTO pDTO = new UserInfoDTO();
-        pDTO.setUser_id(user_id);
 
 
-        UserInfoDTO rDTO = userInfoService.SelectUser(pDTO);
 
-        model.addAttribute("EditMyinfo", rDTO);
-
-        return "/mypage/EditMyinfo";
-    }
-
-    @GetMapping(value = "/UpdateUser")
+    @PostMapping(value = "/UpdateUser")
     private String UpdateUser(HttpServletRequest request, ModelMap model, HttpSession session) throws Exception {
 
         log.info(this.getClass().getName() + ".UpdateUser Start!");
@@ -119,7 +131,7 @@ public class MyPageController {
         return "/mypage/MsgToMyPage";
     }
 
-    @GetMapping(value = "/DeleteUser")
+    @PostMapping(value = "/DeleteUser")
     public String DeleteUser(HttpServletRequest request, ModelMap model, HttpSession session) {
 
         log.info(this.getClass().getName() + ".DeleteUser start!");
@@ -157,5 +169,74 @@ public class MyPageController {
         session.invalidate();
         return "/MsgToIndex";
     }
+
+
+
+    @GetMapping(value = "/listMystars")
+    public String listMyStars(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".listMyStars Start!");
+
+        String id = CmmUtil.nvl((String) session.getAttribute("user_id"));
+
+        List<MyDTO> rList = mongoService.getMyStarList(id);
+
+        model.addAttribute("rList",rList);
+
+
+        log.info(this.getClass().getName() + ".listMyStars Start!");
+
+        return "/mypage/MyStarList";
+    }
+
+    @GetMapping(value = "/MyStarInfo")
+    public String MyStarInfo(HttpServletRequest request, ModelMap model) throws Exception{
+        log.info(this.getClass().getName() + ".MyStarInfo Start!");
+
+        String star_name = CmmUtil.nvl(request.getParameter("star_name"));
+
+
+        MyDTO rDTO = mongoService.getMyStarInfo(star_name);
+
+        model.addAttribute("rDTO",rDTO);
+
+
+        log.info(this.getClass().getName() + ".MyStarInfo End!");
+
+        return "/mypage/MyStarInfo";
+    }
+    @ResponseBody
+    @GetMapping(value = "/deleteStar")
+    public String deleteMyStar(HttpServletRequest request, HttpSession session, ModelMap model) throws  Exception {
+
+        log.info(this.getClass().getName() + ".deleteMyStar Start!");
+
+        String msg;
+        String user_id = CmmUtil.nvl((String) session.getAttribute("user_id"));
+        String star_name = CmmUtil.nvl(request.getParameter("star_name"));
+
+        MyDTO pDTO = new MyDTO();
+
+        pDTO.setUser_id(user_id);
+        pDTO.setStar_name(star_name);
+
+        int res = mongoService.deleteMyStar(pDTO);
+
+        if (res == 1) {
+            msg = "삭제되었습니다.";
+            model.addAttribute("msg", msg);
+            log.info(this.getClass().getName() + ".deleteMyStar End!");
+            return msg;
+        } else {
+            msg = "fail";
+            log.info(this.getClass().getName() + ".deleteMyStar End!");
+            return msg;
+
+        }
+
+
+
+
+    }
+
 
 }

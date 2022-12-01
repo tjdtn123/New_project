@@ -64,9 +64,33 @@ public class UserInfoController {
         return "/FindPwd";
 
     }
+    @GetMapping(value = "FindPwdi")
+    public String FindPwdi() {
+        return "/FindPwdi";
+
+    }
     @GetMapping(value = "PwdChange")
     public String PwdChange() {
+
+
         return "/PwdChange";
+
+    }
+    @GetMapping(value = "PwdChangei")
+    public String PwdChangei(HttpServletRequest request, ModelMap model) throws Exception {
+
+        String user_id = CmmUtil.nvl(request.getParameter("user_id"));
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+
+        pDTO.setUser_id(user_id);
+
+        UserInfoDTO uDTO = userInfoService.SelectUser(pDTO);
+
+        model.addAttribute("uDTO", uDTO);
+
+
+        return "/PwdChangei";
 
     }
 
@@ -246,6 +270,60 @@ public class UserInfoController {
 
         return "/MsgToLogin";
     }
+    @PostMapping(value = "/ChangePwdi")
+    public String ChangePwdi(HttpSession session, HttpServletRequest request, ModelMap model) {
+
+        log.info(this.getClass().getName() + ".ChangePwd start!");
+
+        String msg = "";
+
+        try {
+            /*
+             * 게시판 글 등록되기 위해 사용되는 form객체의 하위 input 객체 등을 받아오기 위해 사용함
+             */
+            String user_id = CmmUtil.nvl(request.getParameter("user_id")); // 아이디
+            String password = CmmUtil.nvl(request.getParameter("password")); // 제목
+
+
+            /*
+             * ####################################################################################
+             * 반드시, 값을 받았으면, 꼭 로그를 찍어서 값이 제대로 들어오는지 파악해야함 반드시 작성할 것
+             * ####################################################################################
+             */
+            log.info("user_id : " + user_id);
+            log.info("password : " + password);
+
+            UserInfoDTO uDTO = new UserInfoDTO();
+
+            uDTO.setUser_id(user_id);
+            uDTO.setPassword(password);
+
+            /*
+             * 게시글 등록하기위한 비즈니스 로직을 호출
+             */
+            userInfoService.ChangePwd(uDTO);
+
+            // 저장이 완료되면 사용자에게 보여줄 메시지
+            msg = "변경되었습니다.";
+
+
+        } catch (Exception e) {
+
+            // 저장이 실패되면 사용자에게 보여줄 메시지
+            msg = "실패하였습니다. : " + e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+
+        } finally {
+            log.info(this.getClass().getName() + ".ChangePwd end!");
+
+            // 결과 메시지 전달하기
+            model.addAttribute("msg", msg);
+
+        }
+
+        return "/MsgToLogin";
+    }
     @GetMapping(value = "/admin/UserList")
     public String UserList(ModelMap model, Criteria cri)
             throws Exception {
@@ -279,6 +357,26 @@ public class UserInfoController {
 
     }
 
+    @PostMapping("/deleteUser")
+    public String deleteUser(HttpSession session, ModelMap model) throws Exception {
+        log.info(this.getClass().getName() + ".deleteUser start!");
+        String msg = "";
+        String user_id = CmmUtil.nvl((String) session.getAttribute("user_id"));
+
+        UserInfoDTO pDTO = new UserInfoDTO();
+
+        pDTO.setUser_id(user_id);
+
+        userInfoService.DeleteUser(pDTO);
+
+        session.invalidate();
+
+        msg = "성공";
+
+
+        log.info(this.getClass().getName() + ".deleteUser end!");
+        return msg;
+    }
 
     @PostMapping("/register/idCheck")
     @ResponseBody

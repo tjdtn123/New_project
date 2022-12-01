@@ -45,7 +45,7 @@ pageEncoding="UTF-8"%>
         </div>
     </section>
     <div class="login-form">
-        <div class="card-header">
+        <div class="card-header" style="background-color: #eeeff1">
             <h3 class="text-center font-weight-light my-4">로그인</h3>
 
         </div>
@@ -54,10 +54,11 @@ pageEncoding="UTF-8"%>
             <input type="text" name="user_id" class="text-field" placeholder="아이디"><br>
             <input type="password" name="password" class="text-field" placeholder="비밀번호"><br>
             <input type="submit" value="로그인" class="submit-btn">
+
         </form>
 
         <div class="links">
-            <a href="/FindPwd">비밀번호를 잊어버리셨나요?</a>
+            <a href="/FindPwdi">비밀번호를 잊어버리셨나요?</a>
         </div>
 
         <div class="links">

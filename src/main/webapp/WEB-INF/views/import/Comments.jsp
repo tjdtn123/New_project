@@ -23,10 +23,11 @@
                 var a ='';
                 $.each(data, function(key, value){
                     a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-                    a += '<div class="commentInfo'+value.comments_id+'">'+'댓글번호 : '+value.comments_id+' / 작성자 : '+value.user_id;
-                    a += '<a onclick="commentUpdate('+value.comments_id+',\''+value.contents+'\',\''+value.user_id+'\');"> 수정 </a>';
-                    a += '<a onclick="commentDelete('+value.comments_id+',\''+value.user_id+'\');"> 삭제 </a> </div>';
-                    a += '<div class="commentContent'+value.comments_id+'"> <p> 내용 : '+value.contents +'</p>';
+                    a += '<div class="commentInfo'+value.comments_id+'" style="margin-top: 8px; display: flex;">'+'댓글번호 : '+value.comments_id+' / 작성자 : '+value.user_id;
+                    a += '<button type="button" class="btn btn-primary" style="margin-left: 50%" onclick="commentUpdate('+value.comments_id+',\''+value.contents+'\',\''+value.user_id+'\');"> 수정 </button>';
+                    a += '<button type="button" class="btn btn-primary" style="margin-left: 8px;" onclick="commentDelete('+value.comments_id+',\''+value.user_id+'\');"> 삭제 </button> </div>';
+
+                    a += '<div style="margin-top: 10px;" class="commentContent'+value.comments_id+'"> <p> 내용 : '+value.contents +'</p>';
                     a += '</div></div>';
                 });
 
@@ -58,8 +59,8 @@
             var a ='';
 
             a += '<div class="input-group">';
-            a += '<input type="text" class="form-control" name="contents_'+comments_id+'" value="'+contents+'"/>';
-            a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+comments_id+');">수정</button> </span>';
+            a += '<input type="text" class="form-control text-field" name="contents_'+comments_id+'" value="'+contents+'"/>';
+            a += '<span class="input-group-btn"><button class="btn btn-primary" type="button" onclick="commentUpdateProc('+comments_id+');">수정</button> </span>';
             a += '</div>';
 
             $('.commentContent'+comments_id).html(a);
@@ -84,15 +85,19 @@
     //댓글 삭제
     function commentDelete(comments_id, user_id){
         if (user_id == "<%=id_session%>"){
+            if (confirm("댓글을 삭제하시겠습니까?")){
+                $.ajax({
+                    url: '/comment/delete/' + comments_id,
+                    type: 'post',
+                    data: {'comments_id': comments_id},
+                    success: function (data) {
+                        if (data == 1) commentList(bno); //댓글 삭제후 목록 출력
+                    }
+                });
 
-            $.ajax({
-                url: '/comment/delete/' + comments_id,
-                type: 'post',
-                data: {'comments_id': comments_id},
-                success: function (data) {
-                    if (data == 1) commentList(bno); //댓글 삭제후 목록 출력
-                }
-            });
+            }
+
+
         } else alert("권한이 없습니다");
     }
 

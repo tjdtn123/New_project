@@ -6,6 +6,7 @@ import kopo.poly.dto.PageMakeDTO;
 import kopo.poly.service.IBoardService;
 import kopo.poly.service.impl.AwsS3Service;
 import kopo.poly.util.CmmUtil;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,10 @@ public class BoardController {
      * GetMapping(value = "index") =>  GET방식을 통해 접속되는 URL이 index인 경우 아래 함수를 실행함
      */
     @GetMapping(value = "index")
-    public String Index() {
+    public String Index() throws IOException {
+
+
+
         return "index";
 
     }
@@ -128,8 +132,6 @@ public class BoardController {
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
-
-
             /*
              * ####################################################################################
              * 반드시, 값을 받았으면, 꼭 로그를 찍어서 값이 제대로 들어오는지 파악해야함 반드시 작성할 것
@@ -146,6 +148,10 @@ public class BoardController {
             pDTO.setTitle(title);
             pDTO.setNotice_yn(noticeYn);
             pDTO.setContents(contents);
+
+            if (pDTO.getNotice_yn() == "") {
+                pDTO.setNotice_yn("2");
+            }
 
             /*
              * 게시글 등록하기위한 비즈니스 로직을 호출
@@ -322,6 +328,7 @@ public class BoardController {
 
         String msg = "";
 
+
         try {
 
             String user_id = CmmUtil.nvl((String) session.getAttribute("user_id")); // 아이디
@@ -329,6 +336,7 @@ public class BoardController {
             String title = CmmUtil.nvl(request.getParameter("title")); // 제목
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn")); // 공지글 여부
             String contents = CmmUtil.nvl(request.getParameter("contents")); // 내용
+
 
             log.info("user_id : " + user_id);
             log.info("nSeq : " + nSeq);
@@ -344,6 +352,9 @@ public class BoardController {
             pDTO.setNotice_yn(noticeYn);
             pDTO.setContents(contents);
 
+            if (pDTO.getNotice_yn() == "") {
+                pDTO.setNotice_yn("2");
+            }
             // 게시글 수정하기 DB
             boardService.updateBoardInfo(pDTO);
 

@@ -9,6 +9,8 @@
 }
 %>
 <%@include file="import/heads.jsp"%>
+<link rel="stylesheet" href="/css/login.css">
+<link rel="stylesheet" href="/css/nomal.css">
 
     <title>비밀번호 변경</title>
 
@@ -123,7 +125,7 @@
                                         </div>
                                         <div class = "col-md-10">
                                             <div class="form-floating mb-3">
-                                                <button type="button" name="emailCheck" id="emailCheck" onclick="emailSend()">인증메일 전송</button>
+                                                <button type="button" name="emailCheck"  class="submit-btn-100" id="emailCheck" onclick="emailSend()">인증메일 전송</button>
 
                                             </div>
                                         </div>
@@ -134,20 +136,20 @@
                                         </div>
                                         <div class = "col-md-10">
                                             <div class="form-floating mb-3">
-                                                <button type="button" name="certificationBtn" id="certificationBtn" onclick="emailCertification()">인증 하기</button>
+                                                <button type="button"class="submit-btn-100"  name="certificationBtn" id="certificationBtn" onclick="emailCertification()">인증 하기</button>
                                                 <input type="hidden" name="certificationYN" id="certificationYN" value="false"/>
                                             </div>
                                         </div>
                                     <div class="mt-4 mb-0">
                                             <div class="d-grid">
-                                                <input type="submit" value="확인"/>
+                                                <input type="submit" class="submit-btn" value="확인"/>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="card-footer text-center py-3">
-                                <div class="small"><a href="LoginPage.jsp">Have an account? Go to login</a></div>
+                                <div class="small"><a href="/LoginPage">Have an account? Go to login</a></div>
                             </div>
                         </div>
                     </div>

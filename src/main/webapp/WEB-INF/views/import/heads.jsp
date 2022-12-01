@@ -13,13 +13,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/styless.css">
-    <!--<link rel="stylesheet" href="../css/nomal.css">-->
-    <link rel="stylesheet" href="../css/test.css">
 
+    <link rel="stylesheet" href="../css/styless.css">
+    <link rel="stylesheet" href="../css/nomal.css">
     <style>
 
     body {
-        background-color: #485f76;
+        background-color: #1f253e;
     }
-</style>
+    *{
+        font-family: 'Gowun Dodum', sans-serif;
+    }
+    hr{
+        color: white;
+    }
+
+    </style>

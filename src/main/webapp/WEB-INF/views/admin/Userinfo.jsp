@@ -24,53 +24,45 @@
 </head>
 <body>
 <%@include file="../import/Navigation.jsp"%>
-<div id="layoutAuthentication">
-    <div id="layoutAuthentication_content">
-        <main>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-7">
-                        <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4">회원정보</h3></div>
-                                <div class="card-body">
-                                        <div class=" ">
-                                            <div class="garo">
-                                                <div>아이디</div>
-                                                <div colspan="3"><%=CmmUtil.nvl(rDTO.getUser_id())%></div>
-                                            </div>
-                                        </div>
-                                        <div class="">
-                                            <div class="garo">
-                                                <div>비밀번호</div>
-                                                <div colspan="3"><%=CmmUtil.nvl(rDTO.getPassword())%></div>
-                                            </div>
-                                        </div>
-                                        <div class="">
-                                            <div class="garo">
-                                                <div>이름</div>
-                                                <div colspan="3"><%=CmmUtil.nvl(rDTO.getUser_name())%></div>
-                                            </div>
-                                        </div>
-                                        <div class="">
-                                            <div class="garo">
-                                                <div>이메일</div>
-                                                <div colspan="3"><%=CmmUtil.nvl(rDTO.getEmail())%></div>
-                                            </div>
-                                        </div>
-                                    <div>
-                                        <div colspan="4">
-                                            <a href="javascript:doEdit('<%=CmmUtil.nvl(rDTO.getUser_id())%>');">[수정]</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<div class="container" >
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header"><h1 class="text-center font-weight-light my-4"><strong>회원 정보</strong></h1></div>
+
+
+                <div class="card-body" style="padding: 30px">
+
+
+                    <div class="text-center">
+                        <div style="display: flex;">
+                            <div style="width: 20%; border: black groove 2px; text-align: center"><h4 style="padding: 10px"><strong>아이디</strong></h4></div>
+                            <div style="width: 76%; border: black groove 2px; margin-left: 20px;"><h4 style="padding: 10px"><strong><%=CmmUtil.nvl(rDTO.getUser_id())%></strong></h4></div>
+                        </div>
+                        <br>
+                        <div style="display: flex;">
+                            <div style="width: 20%; border: black groove 2px; text-align: center"><h4 style="padding: 10px"><strong>이름</strong></h4></div>
+                            <div style="width: 76%; border: black groove 2px; margin-left: 20px;"><h4 style="padding: 10px"><strong><%=CmmUtil.nvl(rDTO.getUser_name())%></strong></h4></div>
+                        </div>
+                        <br>
+                        <div style="display: flex;">
+                            <div style="width: 20%; border: black groove 2px; text-align: center"><h4 style="padding: 10px"><strong>이메일</strong></h4></div>
+                            <div style="width: 76%; border: black groove 2px; margin-left: 20px;"><h4 style="padding: 10px"><strong><%=CmmUtil.nvl(rDTO.getEmail())%></strong></h4></div>
+                        </div>
+                        <br>
+
+                        <br>
                     </div>
+                    <div style="display: flex; float: right;">
+                        <button class="btn btn--block card__btn" onclick="doEdit('<%=CmmUtil.nvl(rDTO.getUser_id())%>')">수정</button>
+                        <button class="btn btn--block card__btn" style="margin-left: 10px;" onclick="history.back()">목록</button>
+                    </div>
+
                 </div>
             </div>
-        </main>
+        </div>
     </div>
-</div>
 
 
-</body>
 
+<%@include file="../import/footer.jsp"%>

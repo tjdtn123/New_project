@@ -11,13 +11,17 @@
                 <li class="nav-item"><a class="nav-link" href="/Astro/selectDate">우주 현상 </a></li>
                 <li class="nav-item"><a class="nav-link" href="/observer/selectRegion">국내 천문대</a></li>
                 <li class="nav-item"><a class="nav-link" href="/board/BoardList">게시판</a></li>
+                <li class="nav-item"><a class="nav-link" href="/chat/intro">채팅</a></li>
                 <% if(session.getAttribute("user_id") == null){%>
                 <li class="nav-item " style="position:absolute; right: 5%; bottom:5%;"><a class="nav-link" href="/LoginPage">로그인</a></li>
                 <%}%>
                 <!--<form  required oninput="Show()">-->
                 <% if(session.getAttribute("user_id") != null){%>
-                <li class="nav-item"><a class="nav-link" href="/mypage/MyPage">마이페이지</a></li>
-                <li class="nav-item"><a class="nav-link" href="/Logout">로그아웃</a></li>
+
+
+
+                <li class="nav-item" style="position:absolute; right: 5%; bottom:5%;"><a class="nav-link" href="/mypage/MyPage">마이페이지</a></li>
+                <li class="nav-item" style="position:absolute; right: 15%; bottom:5%;"><a class="nav-link" href="/Logout">로그아웃</a></li>
                 <%}%>
                 <!--</form>-->
             </ul>

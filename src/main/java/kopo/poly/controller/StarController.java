@@ -49,21 +49,4 @@ public class StarController {
 
 
 
-
-
-
-
-
-    @GetMapping(value = "History000")
-    public String History000() {
-        return "/History000";
-
-    }
-
-
-
-
-
-
-
 }

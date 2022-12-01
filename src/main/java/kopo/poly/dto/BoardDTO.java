@@ -23,6 +23,8 @@ public class BoardDTO {
 	private String reg_dt; // 등록일
 	private String chg_id; // 수정자 아이디
 	private String chg_dt; // 수정일
+	private String rownum; //순서
+
 
 	private String user_name; // 등록자명
 

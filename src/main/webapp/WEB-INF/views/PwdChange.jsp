@@ -1,11 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% //String user_id = request.getParameter("user_id");
-   //session.setAttribute("PwdSession", user_id);
-    String session_id = session.getAttribute("user_id").toString();%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <%@include file="import/heads.jsp"%>
 <title>비밀번호 변경</title>
-
-
+<link rel="stylesheet" href="/css/login.css">
+<link rel="stylesheet" href="/css/nomal.css">
 
     <script type="text/javascript">
         function doSubmit(f) {
@@ -17,43 +15,26 @@
         }
     </script>
 </head>
-<body class="bg-primary">
+<body>
 <%@include file="import/Navigation.jsp"%>
-<section>
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5">
-            <div class="col-lg-6">
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-                <br>
-            </div>
-        </div>
-    </div>
-</section>
-<div id="layoutAuthentication" >
-    <div id="layoutAuthentication_content">
-        <main>
-            <div class="container">
+
+            <div class="container" style="margin-top: 200px;">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4"><strong>비밀번호 변경</strong></h3></div>
                             <div class="card-body">
                                 <form name="l" action="/ChangePwd" method="post" onsubmit="return doSubmit(this);">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="password" name="password" type="text" placeholder="password" />
+                                        <input class="form-control" id="password" name="password" type="password" placeholder="password" />
                                         <label for="password">새 비밀번호</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="pwd_check" name="pwd_check" type="pwd_check" placeholder="pwd_check" />
+                                        <input class="form-control" id="pwd_check" name="pwd_check" type="password" placeholder="pwd_check" />
                                         <label for="pwd_check">새 비밀번호 확인</label>
                                     </div>
-                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="/FindPwd">Forgot Password?</a>
-                                        <input type="submit" value="확인">
+                                    <div class="mt-4 mb-0 text-end">
+                                        <input type="submit"  class="submit-btn-100" value="확인">
                                     </div>
                                 </form>
                             </div>
@@ -61,9 +42,5 @@
                     </div>
                 </div>
             </div>
-        </main>
-    </div>
-</div>
 
-</body>
-</html>
+<%@include file="import/footer.jsp"%>
